@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+		xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+	<meta http-equiv="Content-Type" content="application/json; charset=UTF-8" />
+	<meta name="_csrf" content="${_csrf.token}"></meta>
+	<meta name="_csrf_header" content="${_csrf.headerName}"></meta>
+	
+	<META NAME="ROBOTS" CONTENT="INDEX, FOLLOW" />
+	<title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">JSON-LD</title>
+	<meta name="description" content="" />
+	
+<!-- 	<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css"
+		th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+			rel="stylesheet" media="screen" /> -->
+   
+	<link rel="shortcut icon" th:href="@{/myicon.ico}" type="image/x-icon" />	 
+
+	<!--[if lt IE 9]>
+	    <script src="js/html5shiv.js"></script>
+	    <script src="js/respond.min.js"></script>
+	    <![endif]-->
+
+
+<!-- Google fonts -->
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'/>
+<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'/>
+<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:600' rel='stylesheet' type='text/css'/>
+
+<!-- font awesome -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+<!-- bootstrap -->
+<link rel="stylesheet" th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
+
+<!-- animate.css -->
+<link rel="stylesheet" th:href="@{/assets/animate/animate.css}" />
+<link rel="stylesheet" th:href="@{/assets/animate/set.css}" />
+
+<!-- gallery -->
+<link rel="stylesheet" th:href="@{/assets/gallery/blueimp-gallery.min.css}"/>
+
+<!-- favicon -->
+<link rel="shortcut icon" th:href="@{/images/favicon.ico}" type="image/x-icon"/>
+<link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon"/>
+
+
+<link rel="stylesheet" th:href="@{/assets/style.css}"/>
+
+<!-- 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+ 	<script type="text/javascript">
+		var csrf_token = "${session.sessionId}";
+	</script>
+	<script type="text/javascript">
+		var username = "${session.username}";
+	</script>
+</head>
+
+<body class="homepage">
+
+<div class="topbar animated fadeInLeftBig"></div>
+	<div id="home">
+
+		<header layout:fragment="header">
+			<div th:include="fragments/header :: header"></div>
+		</header>
+	
+	    <section layout:fragment="slider">
+	      <div th:include="fragments/slider :: slider"></div>
+	    </section>
+	    
+	    <section layout:fragment="circle">
+	      <div th:include="fragments/circle :: circle"></div>
+	    </section>
+	    
+	    <section layout:fragment="works">
+	      <div th:include="fragments/works :: works"></div>
+	    </section>
+	    
+	    <section layout:fragment="partners">
+	      <div th:include="fragments/partners :: partners"></div>
+	    </section>
+	    
+	    <section layout:fragment="team">
+	      <div th:include="fragments/team :: team"></div>
+	    </section>
+	    
+	    <section layout:fragment="about">
+	      <div th:include="fragments/about :: about"></div>
+	    </section>
+	     	
+	    <section layout:fragment="contact">
+	      <div th:include="fragments/contact :: contact"></div>
+	    </section> 
+	    	
+	    <footer layout:fragment="footer">
+	      <div th:include="fragments/footer :: footer"></div>
+	    </footer> 
+
+		<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+		<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+		    <!-- The container for the modal slides -->
+		    <div class="slides"></div>
+		    <!-- Controls for the borderless lightbox -->
+		    <h3 class="title">Title</h3>
+		    <a class="prev">‹</a>
+		    <a class="next">›</a>
+		    <a class="close">×</a>
+		    <!-- The modal dialog, which will be used to wrap the lightbox content -->    
+		</div>
+	</div>
+<a href="#home" class="gototop "><i class="fa fa-angle-up  fa-3x"></i></a>
+      
+	<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+		th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+		
+
+	<!-- jquery -->
+	<script th:src="@{/assets/jquery.js}"></script>
+	
+	<!-- wow script -->
+	<script th:src="@{/assets/wow/wow.min.js}"></script>
+	
+	
+	<!-- boostrap -->
+	<script th:src="@{/assets/bootstrap/js/bootstrap.js}" type="text/javascript" ></script>
+	
+	<!-- jquery mobile -->
+	<script th:src="@{/assets/mobile/touchSwipe.min.js}"></script>
+	<script th:src="@{/assets/respond/respond.js}"></script>
+	
+	<!-- gallery -->
+	<script th:src="@{/assets/gallery/jquery.blueimp-gallery.min.js}"></script>
+	<!-- 
+	<script src='https://maps.googleapis.com/maps/api/js?key=&sensor=false&extension=.js'></script>  -->
+	
+	
+	<!-- custom script -->
+	<script th:src="@{/assets/script.js}"></script>		
+</body>
+</html>

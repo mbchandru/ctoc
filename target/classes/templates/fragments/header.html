@@ -1,0 +1,50 @@
+<div th:fragment="header">
+<header id="header">
+
+<!-- Header Starts -->
+<div class="navbar-wrapper">
+      <div class="container">
+
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="top-nav">
+          <div class="container">
+            <div class="navbar-header">
+              <!-- Logo Starts -->
+              <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/logo.png}" alt="logo"/></a>
+              <!-- #Logo Ends -->
+
+
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+            </div>
+
+
+            <!-- Nav Starts -->
+            <div class="navbar-collapse  collapse">
+              <ul class="nav navbar-nav navbar-right "> <!-- scroll -->
+				<li ><a th:if="${session.username} != null" th:text="${session.username}" th:href="@{/user/account}"></a></li>              
+				<li ><a th:if="${session.username} == null" th:href="@{/user/login}">Login</a></li>              
+                 <li class="active"><a th:href="@{/}">Home</a></li>
+                 <li ><a href="#menu">Your Ask</a></li>
+                 <li ><a href="#foods">Responses</a></li>
+                 <li ><a href="#partners">Likes</a></li>
+                 <li ><a href="#contact">Your Contacts</a></li>
+              </ul>
+            </div>
+            <!-- #Nav Ends -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+<!-- #Header Starts -->
+
+</header>
+</div>  
+
+  <!--/nav--> 

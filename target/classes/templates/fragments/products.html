@@ -1,0 +1,27 @@
+<div th:fragment="products">
+
+<form class="form"><!-- class="form" id="upload-file-form" th:object="${suppliermsg}"  -->
+				<h3>Product</h3>
+	        	<fieldset>
+	        		<p><label>Name</label><input type="text" name="name" id="name"/></p>
+	        		<p><label>URL</label><input type="text" name="url" id="url"/></p>
+	        		<p><label>Description</label><textarea name="description" id="description"></textarea></p>
+	        		<p><label>Brand</label><input type="text" name="brand" id="brand"/></p>
+	        		<p><label>Manufacturer</label><input type="text" name="manufacturer" id="manufacturer"/></p>
+	        		<p><label>Model</label><input type="text" name="model" id="model"/></p>
+	        		<p><label>Product ID</label><input type="text" name="productID" id="productID"/></p>
+	        		<p><label>Aggregate Rating</label><abbr title="Average">Avg</abbr> Rating <input class="short" type="text" name="aggregateRating" id="aggregateRating"/> based on <input class="short" type="text" name="reviewcount" id="reviewcount"/> reviews</p>
+	        		<p><label>Price</label><input type="text" name="price" id="price"/></p>
+	        		<p><label>Condition</label>
+						<select name="itemCondition" id="itemCondition">
+							<option value="NewCondition">New</option>
+							<option value="UsedCondition">Used</option>
+							<option value="RefurbishedCondition">Refurbished</option>
+							<option value="DamagedCondition">Damaged</option>
+						</select>
+						</p>
+					<p><button class="btn btn-primary"  onclick="madeAjaxCall();" data-th-text="#{add.supplier.button.label}">Add familyName</button>
+					</p>
+	         	</fieldset>
+        	</form>
+</div>
