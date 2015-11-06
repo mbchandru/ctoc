@@ -1,5 +1,7 @@
 package org.schema;
 
+import ciss.in.models.Product;
+
 /**
  * 
  * A structured value indicating the quantity, unit of measurement, and business
@@ -10,10 +12,10 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class TypeAndQuantityNode extends StructuredValue {
+public class TypeAndQuantityNode/* extends StructuredValue*/ {
 
 	private Double amountOfThisGood;
-	private BusinessFunction businessFunction;
+	//private BusinessFunction businessFunction;
 	private Product typeOfGood;
 	private String unitCode;
 
@@ -36,18 +38,18 @@ public class TypeAndQuantityNode extends StructuredValue {
 	 * component of a bundle (TypeAndQuantityNode). The default is
 	 * http://purl.org/goodrelations/v1#Sell.
 	 */
-	public BusinessFunction getBusinessFunction() {
+/*	public BusinessFunction getBusinessFunction() {
 		return this.businessFunction;
 	}
 
-	/**
+	*//**
 	 * The business function (e.g. sell, lease, repair, dispose) of the offer or
 	 * component of a bundle (TypeAndQuantityNode). The default is
 	 * http://purl.org/goodrelations/v1#Sell.
-	 */
+	 *//*
 	public void setBusinessFunction(BusinessFunction businessFunction) {
 		this.businessFunction = businessFunction;
-	}
+	}*/
 
 	/**
 	 * The product that this structured value is referring to.

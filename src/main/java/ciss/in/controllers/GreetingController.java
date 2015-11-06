@@ -14,6 +14,7 @@ public class GreetingController  extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("/index");
+        registry.addViewController("/user/contact").setViewName("/user/contact");
     }
     
     public void addResourceHandlers(ResourceHandlerRegistry registry)

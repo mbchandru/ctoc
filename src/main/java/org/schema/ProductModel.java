@@ -1,5 +1,7 @@
 package org.schema;
 
+import ciss.in.models.Product;
+
 /**
  * 
  * A datasheet or vendor specification of a product (in the sense of a

@@ -1,17 +1,20 @@
 package ciss.in.models;
 
 //import org.schema.Brand;
+import java.util.ArrayList;
+
+import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Entity;
 import org.schema.ContactPoint;
 import org.schema.Country;
-import org.schema.Demand;
+
 //import org.schema.EducationalOrganization;
 //import org.schema.Event;
-import org.schema.Offer;
+
 import org.schema.Organization;
 import org.schema.OwnershipInfo;
 import org.schema.Place;
 import org.schema.PostalAddress;
-import org.schema.Product;
 import org.schema.Thing;
 
 
@@ -24,6 +27,7 @@ import org.schema.Thing;
  * @author Texelz (by Onhate)
  * 
  */
+@Entity
 public class Person extends Thing {
 
 	//private String additionalName;
@@ -53,7 +57,8 @@ public class Person extends Thing {
 	//private String isicV4;
 	private String jobTitle;
 	private Person knows;
-	private Offer makesOffer;
+	@Embedded
+	private ArrayList<Offer> makesOffer;
 	private Organization memberOf;
 	//private String naics;
 	private Country nationality;
@@ -61,7 +66,8 @@ public class Person extends Thing {
 	//private Person parent;
 	//private Event performerIn;
 	//private Person relatedTo;
-	private Demand seeks;
+	@Embedded
+	private ArrayList<Demand> seeks;
 	//private Person sibling;
 	//private Person spouse;
 	//private String taxID;
@@ -495,14 +501,14 @@ public class Person extends Thing {
 	/**
 	 * A pointer to products or services offered by the organization or person.
 	 */
-	public Offer getMakesOffer() {
+	public ArrayList<Offer> getMakesOffer() {
 		return this.makesOffer;
 	}
 
 	/**
 	 * A pointer to products or services offered by the organization or person.
 	 */
-	public void setMakesOffer(Offer makesOffer) {
+	public void setMakesOffer(ArrayList<Offer> makesOffer) {
 		this.makesOffer = makesOffer;
 	}
 
@@ -616,7 +622,7 @@ public class Person extends Thing {
 	 * A pointer to products or services sought by the organization or person
 	 * (demand).
 	 */
-	public Demand getSeeks() {
+	public ArrayList<Demand> getSeeks() {
 		return this.seeks;
 	}
 
@@ -624,7 +630,7 @@ public class Person extends Thing {
 	 * A pointer to products or services sought by the organization or person
 	 * (demand).
 	 */
-	public void setSeeks(Demand seeks) {
+	public void setSeeks(ArrayList<Demand> seeks) {
 		this.seeks = seeks;
 	}
 

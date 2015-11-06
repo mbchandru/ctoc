@@ -40,23 +40,13 @@ public class QueryProcessor implements Processor {
      *
      *  @param exchange the current camel message exchange
      */
-    public void process(final Exchange exchange) throws IOException {
-
-        //final Message in = exchange.getIn();
-        //final String subject = ProcessorUtils.getSubjectUri(in);
-
-        Object body = exchange.getIn().getBody();
-        //final StringBuilder query = new StringBuilder("update=");
-
-        //query.append(body.toString());
-
-        //in.setBody(query.toString());
-        //exchange.getOut().setHeader("Accept", "application/rdf+xml");
-        exchange.getOut().setHeader("Content-Type", "application/rdf+xml");
-        //exchange.getOut().setHeader("Content-Type", "application/x-www-form-urlencoded charset=UTF-8");
-        //exchange.getOut().setHeader("upload", body);
-        System.out.println("body " + body);
-        
-        exchange.getOut().setBody(body);
+    public void process(final Exchange exchange) throws IOException {     
+        searchForProduct(exchange);
+    }
+    
+    public void searchForProduct(Exchange exchange) {
+    	String queryString = (String) exchange.getIn().getBody();
+    	exchange.getOut().setHeader("query", queryString);        
+        exchange.getOut().setBody(queryString);
     }
 }

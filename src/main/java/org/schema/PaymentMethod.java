@@ -21,6 +21,6 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class PaymentMethod extends Enumeration {
+public class PaymentMethod/* extends Enumeration */{
 
 }

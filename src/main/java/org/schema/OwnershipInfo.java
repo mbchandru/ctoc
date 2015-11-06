@@ -1,5 +1,7 @@
 package org.schema;
 
+import ciss.in.models.Product;
+
 /**
  * 
  * A structured value providing information about when a certain organization or
@@ -10,7 +12,7 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class OwnershipInfo extends StructuredValue {
+public class OwnershipInfo/* extends StructuredValue*/ {
 
 	private Object acquiredFrom;
 	private java.util.Date ownedFrom;

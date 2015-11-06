@@ -1,5 +1,9 @@
 package org.schema;
 
+import ciss.in.models.Demand;
+import ciss.in.models.Offer;
+import ciss.in.models.Person;
+
 /**
  * 
  * An organization such as a school, NGO, corporation, club, etc.
@@ -19,7 +23,7 @@ public class Organization extends Thing {
 	private String duns;
 	private String email;
 	private Person employee;
-	private Event event;
+	//private Event event;
 	private String faxNumber;
 	private Person founder;
 	private java.util.Date foundingDate;
@@ -179,17 +183,17 @@ public class Organization extends Thing {
 	 * Upcoming or past event associated with this place or organization.
 	 * Supercedes <a href="events">events</a>.
 	 */
-	public Event getEvent() {
+/*	public Event getEvent() {
 		return this.event;
 	}
 
-	/**
+	*//**
 	 * Upcoming or past event associated with this place or organization.
 	 * Supercedes <a href="events">events</a>.
-	 */
+	 *//*
 	public void setEvent(Event event) {
 		this.event = event;
-	}
+	}*/
 
 	/**
 	 * The fax number.

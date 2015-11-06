@@ -28,6 +28,7 @@ public class OwlProcessor {
 	    	String urlperson = personRes.getURI();
 	    	
 	        OntClass person = model.getOntClass(urlperson);
+	      
 	        Iterator<OntProperty> props = person.listDeclaredProperties();
 	        while (props.hasNext()) {
 	            OntProperty p = props.next();
@@ -45,7 +46,7 @@ public class OwlProcessor {
 		try {
 	    	Resource productRes = Schemaorg.Product;
 	    	String urlproduct = productRes.getURI();
-
+	    	
 	    	OntClass product = model.getOntClass(urlproduct);
 	        Iterator<OntProperty> props = product.listDeclaredProperties();
 	        while (props.hasNext()) {
@@ -66,7 +67,8 @@ public class OwlProcessor {
 	    	Resource localBusi = Schemaorg.LocalBusiness;
 	    	String urlBusi = localBusi.getURI();
 	    	
-	        OntClass localbusiness = model.getOntClass(urlBusi);	        
+	        OntClass localbusiness = model.getOntClass(urlBusi);
+
 	        Iterator<OntProperty> props1 = localbusiness.listDeclaredProperties(true);
 	        Map<String, Class<?>> classProperties = null;
 	        while (props1.hasNext()) {

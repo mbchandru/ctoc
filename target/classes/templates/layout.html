@@ -59,6 +59,13 @@
 	<script type="text/javascript">
 		var username = "${session.username}";
 	</script>
+	
+	<!-- xmp.. -->
+    <link th:href="@{/converse/css/converse.min.css}" rel="stylesheet"/>
+    <link th:href="@{/converse/main/css/main.css}" rel="stylesheet"/>
+
+    <script th:src="@{/converse/main/js/require.js}"></script>
+    <script th:src="@{/converse/js/converse.min.js}"></script>
 </head>
 
 <body class="homepage">
@@ -78,12 +85,12 @@
 	      <div th:include="fragments/circle :: circle"></div>
 	    </section>
 	    
-	    <section layout:fragment="works">
-	      <div th:include="fragments/works :: works"></div>
+	    <section layout:fragment="response">
+	      <div th:include="fragments/response :: response"></div>
 	    </section>
 	    
-	    <section layout:fragment="partners">
-	      <div th:include="fragments/partners :: partners"></div>
+	    <section layout:fragment="feedback">
+	      <div th:include="fragments/feedback :: feedback"></div>
 	    </section>
 	    
 	    <section layout:fragment="team">

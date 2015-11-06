@@ -21,6 +21,6 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class DeliveryMethod extends Enumeration {
+public class DeliveryMethod/* extends Enumeration*/ {
 
 }

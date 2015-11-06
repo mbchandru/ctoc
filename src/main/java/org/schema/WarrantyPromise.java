@@ -11,10 +11,10 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class WarrantyPromise extends StructuredValue {
+public class WarrantyPromise /*extends StructuredValue*/ {
 
 	private QuantitativeValue durationOfWarranty;
-	private WarrantyScope warrantyScope;
+	//private WarrantyScope warrantyScope;
 
 	/**
 	 * The duration of the warranty promise. Common unitCode values are ANN for
@@ -35,14 +35,14 @@ public class WarrantyPromise extends StructuredValue {
 	/**
 	 * The scope of the warranty promise.
 	 */
-	public WarrantyScope getWarrantyScope() {
+/*	public WarrantyScope getWarrantyScope() {
 		return this.warrantyScope;
 	}
 
-	/**
+	*//**
 	 * The scope of the warranty promise.
-	 */
+	 *//*
 	public void setWarrantyScope(WarrantyScope warrantyScope) {
 		this.warrantyScope = warrantyScope;
-	}
+	}*/
 }

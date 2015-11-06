@@ -214,8 +214,37 @@
 					<groupId>log4j</groupId>
 				</exclusion>
 			</exclusions>
-	</dependency>
-    </dependencies>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.mobile</groupId>
+		    <artifactId>spring-mobile-device</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>rocks.xmpp</groupId>
+			<artifactId>xmpp-core</artifactId>
+			<version>0.6.1</version>
+		</dependency>		
+		<dependency>
+			<groupId>rocks.xmpp</groupId>
+			<artifactId>xmpp-core-client</artifactId>
+			<version>0.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>rocks.xmpp</groupId>
+			<artifactId>xmpp-extensions</artifactId>
+			<version>0.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>rocks.xmpp</groupId>
+			<artifactId>xmpp-extensions-client</artifactId>
+			<version>0.6.1</version>
+		</dependency>
+
+	</dependencies>
 
     <properties>
         <java.version>1.7</java.version>
@@ -249,22 +278,22 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             
-  <plugin>
+  <!-- <plugin>
     <groupId>org.apache.jena</groupId>
     <artifactId>jena-maven-tools</artifactId>
     <version>3.0.0</version>
     <configuration>
-<!--       <includes>
+      <includes>
         <include>src/main/vocabs/*.ttl</include>
         <include>src/main/vocabs/foaf.rdf</include>
-      </includes> -->
+      </includes>
       <fileOptions>
         <source>
           <input>default</input>
           <package-name>org.example.test</package-name>
         </source>
         <source>
-          <!-- Test2.java (only) will contain OntModel declarations -->
+          Test2.java (only) will contain OntModel declarations
           <input>src/main/java/ciss/in/jena/owl/schemaorg.owl</input>
           <ontology>true</ontology>
         </source>
@@ -278,7 +307,7 @@
        </goals>
       </execution>
      </executions>
-    </plugin>    
+    </plugin>     -->
                 
         </plugins>
 

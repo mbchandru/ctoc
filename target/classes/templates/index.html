@@ -7,6 +7,31 @@ layout:decorator="layout">
 </head>
 
 <body class="homepage">
-
+	<section layout:fragment="response" th:remove="tag">
+    </section>
+    <div class="container">
+    <div class="starter-template">
+        <h1 id="jid"></h1>
+    </div>
+    <div id="conversejs"></div>
+</div>
+<script th:inline="javascript">
+$(document).ready(function(){
+    $.get("/config", function(data, status){
+        $('#jid').html(data.jid);
+        require(['converse'], function (converse) {
+            converse.initialize({
+                prebind:true,
+                prebind_url: data.prebindUrl,
+                bosh_service_url: data.bindUrl,
+                jid: data.jid,
+                keepalive: true,
+                allow_logout: false,
+                allow_registration: false
+            });
+        });
+    });
+});
+</script> 
 </body>
 </html>

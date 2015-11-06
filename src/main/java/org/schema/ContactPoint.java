@@ -9,15 +9,15 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class ContactPoint extends StructuredValue {
+public class ContactPoint /*extends StructuredValue*/ {
 
 	private AdministrativeArea areaServed;
-	private Language availableLanguage;
-	private ContactPointOption contactOption;
+	//private Language availableLanguage;
+	//private ContactPointOption contactOption;
 	private String contactType;
 	private String email;
 	private String faxNumber;
-	private OpeningHoursSpecification hoursAvailable;
+	//private OpeningHoursSpecification hoursAvailable;
 	private Object productSupported;
 	private String telephone;
 
@@ -40,33 +40,33 @@ public class ContactPoint extends StructuredValue {
 	/**
 	 * A language someone may use with the item.
 	 */
-	public Language getAvailableLanguage() {
+/*	public Language getAvailableLanguage() {
 		return this.availableLanguage;
 	}
 
-	/**
+	*//**
 	 * A language someone may use with the item.
-	 */
+	 *//*
 	public void setAvailableLanguage(Language availableLanguage) {
 		this.availableLanguage = availableLanguage;
 	}
 
-	/**
+	*//**
 	 * An option available on this contact point (e.g. a toll-free number or
 	 * support for hearing-impaired callers.)
-	 */
+	 *//*
 	public ContactPointOption getContactOption() {
 		return this.contactOption;
 	}
 
-	/**
+	*//**
 	 * An option available on this contact point (e.g. a toll-free number or
 	 * support for hearing-impaired callers.)
-	 */
+	 *//*
 	public void setContactOption(ContactPointOption contactOption) {
 		this.contactOption = contactOption;
 	}
-
+*/
 	/**
 	 * A person or organization can have different contact points, for different
 	 * purposes. For example, a sales contact point, a PR contact point and so
@@ -116,17 +116,17 @@ public class ContactPoint extends StructuredValue {
 	/**
 	 * The hours during which this contact point is available.
 	 */
-	public OpeningHoursSpecification getHoursAvailable() {
+/*	public OpeningHoursSpecification getHoursAvailable() {
 		return this.hoursAvailable;
 	}
 
-	/**
+	*//**
 	 * The hours during which this contact point is available.
-	 */
+	 *//*
 	public void setHoursAvailable(OpeningHoursSpecification hoursAvailable) {
 		this.hoursAvailable = hoursAvailable;
 	}
-
+*/
 	/**
 	 * The product or service this support contact point is related to (such as
 	 * product support for a particular product line). This can be a specific

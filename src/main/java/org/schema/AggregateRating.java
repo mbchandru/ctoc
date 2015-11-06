@@ -9,7 +9,7 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class AggregateRating extends Rating {
+public class AggregateRating/* extends Rating*/ {
 
 	private Thing itemReviewed;
 	private Double ratingCount;

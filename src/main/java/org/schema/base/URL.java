@@ -8,7 +8,7 @@ public class URL {
 		return new URL(Constants.SCHEMA_ORG + href);
 	}
 
-	public static final URL to(String href) {
+	public final URL to(String href) {
 		return new URL(href);
 	}
 

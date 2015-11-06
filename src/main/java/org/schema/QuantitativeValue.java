@@ -9,7 +9,7 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class QuantitativeValue extends StructuredValue {
+public class QuantitativeValue /*extends StructuredValue*/ {
 
 	private Double maxValue;
 	private Double minValue;

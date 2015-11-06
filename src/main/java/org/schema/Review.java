@@ -9,11 +9,11 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class Review extends CreativeWork {
+public class Review/* extends CreativeWork*/ {
 
 	private Thing itemReviewed;
 	private String reviewBody;
-	private Rating reviewRating;
+	//private Rating reviewRating;
 
 	/**
 	 * The item that is being reviewed/rated.
@@ -49,17 +49,17 @@ public class Review extends CreativeWork {
 	 * review. The <code>aggregateRating</code> property applies to the review
 	 * itself, as a creative work.
 	 */
-	public Rating getReviewRating() {
+/*	public Rating getReviewRating() {
 		return this.reviewRating;
 	}
 
-	/**
+	*//**
 	 * The rating given in this review. Note that reviews can themselves be
 	 * rated. The <code>reviewRating</code> applies to rating given by the
 	 * review. The <code>aggregateRating</code> property applies to the review
 	 * itself, as a creative work.
-	 */
+	 *//*
 	public void setReviewRating(Rating reviewRating) {
 		this.reviewRating = reviewRating;
 	}
-}
+*/}

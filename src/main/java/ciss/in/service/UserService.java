@@ -1,12 +1,11 @@
 package ciss.in.service;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ciss.in.models.User;
-
 import ciss.in.repositories.UserRepository;
 
 public class UserService {
@@ -38,7 +37,7 @@ public class UserService {
 		repos.delete(user);
 	}		
 
-	public List<User> list() {
+	public ArrayList<User> list() {
 		return repos.findAll();
 	}	
 }

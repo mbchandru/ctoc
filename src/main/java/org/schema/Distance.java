@@ -10,6 +10,6 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class Distance extends Quantity {
+public class Distance/* extends Quantity*/ {
 
 }

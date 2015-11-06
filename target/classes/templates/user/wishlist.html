@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+layout:decorator="layout">
+
+<head>
+	<title>Account</title>
+</head>
+
+<body class="homepage">
+    <section layout:fragment="slider" th:remove="tag">
+		<div th:replace="fragments/userwishlist :: wishlist"></div>    
+    </section>
+	<section layout:fragment="response" th:remove="tag">
+    </section> 
+</body>
+
+</html>

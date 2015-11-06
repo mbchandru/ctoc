@@ -1,6 +1,6 @@
 <div th:fragment="login">
 <section id="feature" >
-  <div class="container" style="width: 355px;">
+  <div class="container" style="width: 355px; padding-top: 15px;">
   
       <div class="center">
       	<h2>Login</h2>
@@ -14,17 +14,20 @@
         <div th:if="${param.logout}">
             You have been logged out.
         </div>
-            <div class="form-group"><label>User Name<input type="text" name="username" maxlength="15" class="form-control" required="required"/> </label></div>
-            <div class="form-group"><label>Password<input type="password" name="password" maxlength="15" class="form-control" required="required"/> </label></div>
-			<div class="g-recaptcha" data-type="image" data-sitekey="6LcXUwgTAAAAALBglYmHTDBf48NVAbPvksG-C_zV" required="required"></div>
+            <div class="form-group"><label>User Name<input type="text" name="username" maxlength="45" class="form-control" required="required"/> </label></div>
+            <div class="form-group"><label>Password<input type="password" name="password" maxlength="45" class="form-control" required="required"/> </label></div>
+			<div class="g-recaptcha form-group" data-type="image" data-sitekey="6LcXUwgTAAAAALBglYmHTDBf48NVAbPvksG-C_zV" required="required"></div>
             <div class="form-group">
 				<button type="submit" name="submit" class="btn btn-primary btn-lg" required="true">Sign In</button>
             </div>     
 		</form>  
 		<div>
-		<p><a th:href="@{/user/forgotpassword}" >Forgot Password! - Click here</a></p>
+		<p><a th:href="@{/user/forgotpassword}" >Forgot Password!</a> - Click here</p>
          	  <p th:text="${responseMessage}" class="center"/>        
 		</div>
+		<div>
+		<p>If you are new, Please <a th:href="@{/user/register}" >Register </a>here</p>   
+		</div>		
     </div> 
   </div>
   <!--/.container--> 

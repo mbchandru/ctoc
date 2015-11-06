@@ -14,7 +14,7 @@ public class Place extends Thing {
 	private PostalAddress address;
 	private AggregateRating aggregateRating;
 	private Place containedIn;
-	private Event event;
+	//private Event event;
 	private String faxNumber;
 	private Object geo;
 	private String globalLocationNumber;
@@ -22,7 +22,7 @@ public class Place extends Thing {
 	private String isicV4;
 	private Object logo;
 	private org.schema.base.URL map;
-	private OpeningHoursSpecification openingHoursSpecification;
+	//private OpeningHoursSpecification openingHoursSpecification;
 	private Object photo;
 	private Review review;
 	private String telephone;
@@ -75,17 +75,17 @@ public class Place extends Thing {
 	 * Upcoming or past event associated with this place or organization.
 	 * Supercedes <a href="events">events</a>.
 	 */
-	public Event getEvent() {
+/*	public Event getEvent() {
 		return this.event;
 	}
 
-	/**
+	*//**
 	 * Upcoming or past event associated with this place or organization.
 	 * Supercedes <a href="events">events</a>.
-	 */
+	 *//*
 	public void setEvent(Event event) {
 		this.event = event;
-	}
+	}*/
 
 	/**
 	 * The fax number.
@@ -216,17 +216,17 @@ public class Place extends Thing {
 	/**
 	 * The opening hours of a certain place.
 	 */
-	public OpeningHoursSpecification getOpeningHoursSpecification() {
+/*	public OpeningHoursSpecification getOpeningHoursSpecification() {
 		return this.openingHoursSpecification;
 	}
 
-	/**
+	*//**
 	 * The opening hours of a certain place.
-	 */
+	 *//*
 	public void setOpeningHoursSpecification(OpeningHoursSpecification openingHoursSpecification) {
 		this.openingHoursSpecification = openingHoursSpecification;
 	}
-
+*/
 	/**
 	 * A photograph of this place. Supercedes <a href="photos">photos</a>.
 	 * 

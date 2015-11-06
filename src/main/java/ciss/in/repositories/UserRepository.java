@@ -1,6 +1,6 @@
 package ciss.in.repositories;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.data.mongodb.repository.MongoRepository; 
 import org.springframework.data.repository.query.Param;
@@ -11,6 +11,6 @@ public interface UserRepository extends MongoRepository<User, String> {
 	User findByUsername(@Param("username") String username);
 	User findById(@Param("Id") String id);
 	User findByEmail(@Param("email") String email);		
-	List<User> findAll();
+	ArrayList<User> findAll();
 	User findByResetPasswordToken(String token);
 }

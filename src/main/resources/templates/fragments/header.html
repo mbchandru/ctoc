@@ -1,6 +1,5 @@
 <div th:fragment="header">
 <header id="header">
-
 <!-- Header Starts -->
 <div class="navbar-wrapper">
       <div class="container">
@@ -8,9 +7,10 @@
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="top-nav">
           <div class="container">
             <div class="navbar-header">
-              <!-- Logo Starts -->
-              <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/logo.png}" alt="logo"/></a>
-              <!-- #Logo Ends -->
+              <!-- Logo Starts  -->
+<a class="navbar-brand" th:href="@{/}"><i class="glyphicon glyphicon-user" style="font-size: 50px;"></i> <i class="glyphicon glyphicon-link" style="font-size: 50px;"></i> <i class="glyphicon glyphicon-user" style="font-size: 50px;"></i></a>
+<!--               <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/logo.png}" alt="logo"/></a>
+ -->              <!-- #Logo Ends -->
 
 
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -22,17 +22,30 @@
 
             </div>
 
-
             <!-- Nav Starts -->
-            <div class="navbar-collapse  collapse">
-              <ul class="nav navbar-nav navbar-right "> <!-- scroll -->
-				<li ><a th:if="${session.username} != null" th:text="${session.username}" th:href="@{/user/account}"></a></li>              
-				<li ><a th:if="${session.username} == null" th:href="@{/user/login}">Login</a></li>              
-                 <li class="active"><a th:href="@{/}">Home</a></li>
-                 <li ><a href="#menu">Your Ask</a></li>
-                 <li ><a href="#foods">Responses</a></li>
-                 <li ><a href="#partners">Likes</a></li>
-                 <li ><a href="#contact">Your Contacts</a></li>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-left "> <!-- scroll -->
+				<li itemscope="itemscope" itemtype="http://schema.org/breadcrumb" class="active"><a itemprop="url" th:href="@{/}"><span itemprop="title">Home</span></a></li>
+				<li class="active"><a th:if="${session.username} != null" th:text="'Hi ' + |${session.username}|+ ', Welcome'" th:href="@{/user/account}"></a></li>              
+				<li class="active"><a th:if="${session.username} == null" th:href="@{/user/register}">Register</a></li>              
+				<li class="active"><a th:if="${session.username} == null" th:href="@{/user/login}">Login</a></li>              
+				<li class="active"><a th:if="${session.username} != null" th:href="@{/user/transact}">Your Transactions</a></li>
+				<li class="active"><a th:if="${session.username} != null" th:href="@{/user/response}">Freebuys</a></li>
+				<li class="active"><a th:if="${session.username} != null" th:href="@{/user/search}">Search for</a></li>
+				<li class="active"><a th:if="${session.username} != null" th:href="@{/user/wishlist}">Wish to own</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right pull-right">
+				<li class="dropdown active">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Feedbacks <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+				<li ><a href="#feedback">from Customers </a></li>
+				<li ><a th:if="${session.username} != null" th:href="@{/user/contact}">Contact us </a></li>
+                    <li class="divider"></li>
+				<li ><a href="#footer">Social Connect </a></li>
+                </ul>
+	            </li>
+        
+				<li ><a th:if="${session.username} != null" th:href="@{/user/logout}">Sign Out</a></li>
               </ul>
             </div>
             <!-- #Nav Ends -->

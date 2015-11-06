@@ -1,22 +1,18 @@
 package ciss.in;
 
-//import java.util.Arrays;
-
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 
-@Configuration
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ImportResource;
+
+import ciss.in.xmpp.template.config.XmppConfig;
+
+
 @ImportResource("classpath:mongodb.xml")
-@ComponentScan
-@EnableAutoConfiguration
+@EnableConfigurationProperties(XmppConfig.class)
 @SpringBootApplication
-@EnableWebMvcSecurity
 public class Application /*extends SpringBootServletInitializer*/ {
 	
     public static void main(String[] args) {

@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import rocks.xmpp.core.session.XmppClient;
+import ciss.in.xmpp.XMPPConnection;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,21 +35,28 @@ public class CustomUserAuthenticationSuccessHandler implements AuthenticationSuc
     	String returnValue = null;
 
     	if (verify) {
-    		User authUser;
+    		CustomUserDetails authUser = null;
     	
     	Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	String sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
     	if (obj instanceof User) {
-    		authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    		authUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    		
             session.setAttribute("username", authUser.getUsername());
             session.setAttribute("authorities", authentication.getAuthorities());
             session.setAttribute("sessionId", sessionId);
-            returnValue = "/user/data";
+            returnValue = "/user/transact";
     	}
     	System.out.println("sessionId " + sessionId);
         //set our response to OK status
         httpServletResponse.setStatus(HttpServletResponse.SC_OK);
         
+  		// Create xmpp connection with ejabberd for logged in user
+  		authentication = SecurityContextHolder.getContext().getAuthentication();
+  		XMPPConnection xmpp = new XMPPConnection();
+  		XmppClient xmpClient = xmpp.xmppConnect();
+  		xmpp.registerUser(xmpClient, authUser, authentication);
+
 /*    	String userName = null;
     	if (!authUser.getUsername().equals("anonymousUser") || !authUser.getUsername().equals(null)) {
 	    	Object principal1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -9,7 +9,7 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class ImageObject extends MediaObject {
+public class ImageObject/* extends MediaObject*/ {
 
 	private String caption;
 	private String exifData;

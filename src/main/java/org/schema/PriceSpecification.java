@@ -10,7 +10,7 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class PriceSpecification extends StructuredValue {
+public class PriceSpecification/* extends StructuredValue*/ {
 
 	private QuantitativeValue eligibleQuantity;
 	private PriceSpecification eligibleTransactionVolume;

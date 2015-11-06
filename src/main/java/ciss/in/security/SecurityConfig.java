@@ -20,10 +20,16 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 import ciss.in.repositories.UserRepository;
+import ciss.in.xmpp.template.XmppAuthenticationProvider;
 
 @EnableWebMvcSecurity
-	//@Configuration
-	public class SecurityConfig {
+public class SecurityConfig {
+	
+	@Autowired
+    private static XmppAuthenticationProvider xmppAuthenticationProvider;
+
+/*	@Autowired
+    private static CustomLogoutSuccessHandler logoutSuccessHandler;*/
 	
 	@Configuration
 	@Order(1)
@@ -32,10 +38,10 @@ import ciss.in.repositories.UserRepository;
 	    @Override
 	    protected void configure(HttpSecurity http) throws Exception {
 	    	CustomUserAuthenticationSuccessHandler userHandle = new CustomUserAuthenticationSuccessHandler();    
-	    	
+	    	CustomLogoutSuccessHandler logoutSuccessHandler = new CustomLogoutSuccessHandler();
 	        http
 	        /*.antMatcher("/user/**")*/.authorizeRequests()
-	            .antMatchers("/user/register","/","/js/**","/assets/**","/css/**","/fonts/**","/images/**","/home/**","/webjars/**").permitAll()
+	            .antMatchers("/user/error","/user/forgotpassword","/user/resetpassword","/user/register","/","/js/**","/store/**","/assets/**","/css/**","/fonts/**","/images/**","/home/**","/webjars/**").permitAll()
 	            .anyRequest().hasRole("USER")// .authenticated()//.hasRole("USER")
 	            .and()
 	        .formLogin()
@@ -45,8 +51,14 @@ import ciss.in.repositories.UserRepository;
 	        .httpBasic().and()
 	    	.csrf()//.disable();
 	    	.csrfTokenRepository(csrfTokenRepository()).disable()
-	        .logout().logoutUrl("/user/logout").invalidateHttpSession(true).logoutSuccessUrl("/")
-	            .permitAll();
+	        .logout()
+			.logoutSuccessHandler(logoutSuccessHandler)
+			.logoutUrl("/user/logout")
+	        .logoutSuccessUrl("/")
+            .deleteCookies("JSESSIONID")
+	        .invalidateHttpSession(true)
+	        .permitAll()
+	            ;
 	    }
 	    
 	    private CsrfTokenRepository csrfTokenRepository()  { 
@@ -64,10 +76,16 @@ import ciss.in.repositories.UserRepository;
 			      @Override
 			      public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 			    	  user = userRepository.findByUsername(username);
-	
-			    	  org.springframework.security.core.userdetails.User newUser = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), true, true, true, true,
+			    	  org.springframework.security.core.userdetails.User newUser = null;
+			    	  CustomUserDetails customUser = null;
+			    	  if (user==null) {
+			    		  	throw new UsernameNotFoundException("No such user: " + username);
+			    	  }
+			    	  else {
+			    		  newUser = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), true, true, true, true,
 			    			  getAuthorities(user.getRole()));//AuthorityUtils.createAuthorityList("USER"));
-			    	  	CustomUserDetails customUser = new CustomUserDetails(newUser,getAuthorities(user.getRole()));
+			    		  		customUser = new CustomUserDetails(newUser,getAuthorities(user.getRole()));
+			    	  }
 				        return customUser;
 			      }	      
 			    };
@@ -86,63 +104,14 @@ import ciss.in.repositories.UserRepository;
 			
 	    @Override
 	    public void configure(AuthenticationManagerBuilder auth) throws Exception {	
-			    auth.userDetailsService(user1DetailsService())
+			    auth.eraseCredentials(false)
+			    .userDetailsService(user1DetailsService())
 			    		.passwordEncoder(new BCryptPasswordEncoder());
 		}	
 	}
 	
-/*	@Configuration
-    public static class SupplierSecurity extends WebSecurityConfigurerAdapter {
-    	CustomSupplierAuthenticationSuccessHandler supplierHandle = new CustomSupplierAuthenticationSuccessHandler();    
-    
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-        	
-            http
-            .antMatcher("/supplier/**").authorizeRequests()
-                .antMatchers("/js/**","/assets/**","/css/**","/fonts/**","/images/**","/home/**","/webjars/**").permitAll()
-                .anyRequest().hasRole("SUPPLIER")//.authenticated()
-                .and()
-            .formLogin()
-                .loginPage("/supplier/login").successHandler(supplierHandle)
-                .permitAll()
-                .and()
-            .httpBasic().and()
-        	.csrf()//.disable();
-        	.csrfTokenRepository(csrfTokenRepository()).disable()
-            .logout().logoutUrl("/supplier/logout").invalidateHttpSession(true).logoutSuccessUrl("/")
-                .permitAll();
-        }
-        
-        private CsrfTokenRepository csrfTokenRepository()  { 
-            HttpSessionCsrfTokenRepository repository1 = new HttpSessionCsrfTokenRepository(); 
-            repository1.setSessionAttributeName("_csrf");
-            return repository1; 
-        }
-        
-		@Autowired
-		SupplierRepository supplierRepository;
-		 
-		@Bean
-		UserDetailsService supplierDetailsService() {
-			return new UserDetailsService() {
- 
-				@Override
-				public CustomSupplierDetails loadUserByUsername(String supplierName) throws UsernameNotFoundException {
-					Supplier supplier = supplierRepository.findByUsername(supplierName);
-	
-					org.springframework.security.core.userdetails.User newUser = new org.springframework.security.core.userdetails.User(supplier.getUsername(), supplier.getPassword(), true, true, true, true,
-							AuthorityUtils.createAuthorityList("SUPPLIER"));
-					CustomSupplierDetails customUser = new CustomSupplierDetails(newUser,AuthorityUtils.createAuthorityList("SUPPLIER"));
-					return customUser;
-				}    		      
-			};
-		}
-		  
-	    @Override
-	    public void configure(AuthenticationManagerBuilder auth1) throws Exception {
-		    auth1.userDetailsService(supplierDetailsService())
-    		.passwordEncoder(new BCryptPasswordEncoder());	    	
-	    }      
+/*    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(xmppAuthenticationProvider);
     }*/
 }    

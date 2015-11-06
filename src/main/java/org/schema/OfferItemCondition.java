@@ -9,6 +9,6 @@ package org.schema;
  * @author Texelz (by Onhate)
  * 
  */
-public class OfferItemCondition extends Enumeration {
+public class OfferItemCondition/* extends Enumeration*/ {
 
 }

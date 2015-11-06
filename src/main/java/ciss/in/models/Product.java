@@ -1,14 +1,15 @@
 package ciss.in.models;
 
+import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Entity;
 import org.schema.AggregateRating;
 import org.schema.Audience;
 import org.schema.Brand;
 import org.schema.Distance;
 import org.schema.ImageObject;
-import org.schema.Offer;
+//import org.schema.Offer;
 import org.schema.OfferItemCondition;
 import org.schema.Organization;
-
 import org.schema.ProductModel;
 import org.schema.QuantitativeValue;
 //import org.schema.Review;
@@ -25,11 +26,13 @@ import org.schema.Thing;
  * @author Texelz (by Onhate)
  * 
  */
+@Entity
 public class Product extends Thing {
 
 	private AggregateRating aggregateRating;
 	private Audience audience;
 	private Object brand;
+	private String category;
 	private String color;
 	private Object depth;
 	//private String gtin13;
@@ -45,6 +48,7 @@ public class Product extends Thing {
 	private Organization manufacturer;
 	private Object model;
 	private String mpn;
+	@Embedded
 	private Offer offers;
 	private String productID;
 	private java.util.Date releaseDate;
@@ -378,7 +382,7 @@ public class Product extends Thing {
 	 * to loan a book.
 	 */
 	public Offer getOffers() {
-		return this.offers;
+		return offers;
 	}
 
 	/**
@@ -487,5 +491,13 @@ public class Product extends Thing {
 	 */
 	public void setWidth(Object width) {
 		this.width = width;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }

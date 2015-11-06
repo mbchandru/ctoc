@@ -21,6 +21,13 @@ p{font-size:1em;line-height: 1.7em; margin-bottom: 1.7em;}
 
 .spacer{padding: 6em 0;}
 
+.dropdown:hover .dropdown-menu {
+display: block;
+}
+.form-group {
+  margin-top: 15px;
+}
+
 .btn{border:none;border-radius: 0;padding: 1em 4em;background: rgba(0,0,0,0.5);text-transform: uppercase;}
 .btn:hover,.btn:active{color: #fff;}
 .btn-default{color: #ccc;border: 1px solid #aaa;}
@@ -55,7 +62,7 @@ p{font-size:1em;line-height: 1.7em; margin-bottom: 1.7em;}
 
 
 /*testimonials*/
-.partners img{float: left;margin:0 75px 30px 0;}
+.feedback img{float: left;margin:0 75px 30px 0;}
 .testimonails{min-height: 195px;}
 .testimonails img{margin-top: 5px;}
 .testimonails span{color: #888;}
@@ -114,14 +121,14 @@ p{font-size:1em;line-height: 1.7em; margin-bottom: 1.7em;}
 	figure.effect-oscar figcaption{padding: 12%;}
 	figure.effect-oscar figcaption::before,figure.effect-chico figcaption::before{top: 20px;right: 20px;bottom: 20px;left: 20px;}
 
-	.partners img{margin: 0 25px 25px 0;}
+	.feedback img{margin: 0 25px 25px 0;}
 }
 
 @media (max-width: 900px) {
 	h1{font: 700 3.5em Roboto,Arial,Helvetica;}
 	h4 {font: 300 1.3em Roboto,Arial,Helvetica;}
 	.btn{padding: 1em 2em;}
-	.partners img{margin: 0 15px 25px 0;width: 157px;}
+	.feedback img{margin: 0 15px 25px 0;width: 157px;}
 	.services ul li{width: 9em;height: 9em;}
 	figure.effect-chico figcaption {padding: 2em;}	
 	figure.effect-oscar figcaption {padding: 20%;}
@@ -141,11 +148,11 @@ p{font-size:1em;line-height: 1.7em; margin-bottom: 1.7em;}
 
 	h2.text-center{text-align: left;font-size: 1.7em;}
 	h4 {font: 300 1.2em Roboto,Arial,Helvetica;}
-	#partners h2{padding: 0 1em;} 
+	#feedback h2{padding: 0 1em;} 
 	#home {padding-top: 5em;}
 
-	.partners{display: block;float: left;}
-	.partners img{width: 120px;}
+	.feedback{display: block;float: left;}
+	.feedback img{width: 120px;}
 
 
 

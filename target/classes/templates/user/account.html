@@ -9,7 +9,9 @@ layout:decorator="layout">
 <body class="homepage">
     <section layout:fragment="slider" th:remove="tag">
 		<div th:replace="fragments/useraccount :: account"></div>    
-    </section>        
+    </section>
+	<section layout:fragment="response" th:remove="tag">
+    </section> 
 </body>
 
 </html>

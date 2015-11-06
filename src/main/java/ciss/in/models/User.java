@@ -1,6 +1,7 @@
 package ciss.in.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -9,9 +10,10 @@ import javax.validation.constraints.Pattern;
 
 import org.mongodb.morphia.annotations.Entity;
 //import org.springframework.data.annotation.Id;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-public class User implements Serializable {
+public class User extends Person implements Serializable {
   
 	private static final long serialVersionUID = -5329477561242064847L;
 
@@ -27,11 +29,11 @@ public class User implements Serializable {
   private String password;
 
   @NotNull
-  @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
+/*  @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\."
 	        +"[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
 	        +"(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
 	             message="Please enter valid email address")
-  private String email;
+  private String email;*/
   
   private int role;
   
@@ -47,30 +49,6 @@ public class User implements Serializable {
   
   private Date resetPasswordExpires;
   
-  @Size(min=2, max=100)
-	private String personURI;
-	
-  @Size(min=2, max=100)
-	private String fullName;
-  
-  @Size(min=2, max=100)
-	private String title;
-  
-  @Size(min=2, max=100)
-	private String givenname;
-  
-  @Size(min=2, max=100)
-	private String family_name;
-  
-  @Size(min=2, max=100)
-	private String nickName;
-  
-  @Size(min=2, max=100)
-	private String homepage;
-  
-  @Size(min=2, max=100)
-	private String schoolHomepage;
-
   public User(){}
   
   public String getUsername() {
@@ -87,14 +65,7 @@ public class User implements Serializable {
   public void setPassword(String password) {
     this.password = password;
   }
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	
 	public String getResetPasswordToken() {
 		return resetPasswordToken;
 	}
@@ -119,67 +90,43 @@ public class User implements Serializable {
 		this.role = role;
 	}
 	
-	public String getFullName() {
-		return fullName;
+	private ArrayList<MultipartFile> imageFiles;
+	
+	public ArrayList<MultipartFile> getImageFiles() {
+		return imageFiles;
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setImageFiles(ArrayList<MultipartFile> imageFiles) {
+		this.imageFiles = imageFiles;
+	}
+	
+	public ArrayList<String> getTransactionTypes() {
+		return transactionTypes;
 	}
 
-	public String getTitle() {
-		return title;
+	public void setTransactionTypes(ArrayList<String> transactionTypes) {
+		this.transactionTypes = transactionTypes;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public String getProductCategory() {
+		return productCategory;
 	}
 
-	public String getGivenname() {
-		return givenname;
+	public void setProductCategory(String productCategory) {
+		this.productCategory = productCategory;
 	}
 
-	public void setGivenname(String givenname) {
-		this.givenname = givenname;
+	public String getProductSearch() {
+		return productSearch;
 	}
 
-	public String getFamily_name() {
-		return family_name;
+	public void setProductSearch(String productSearch) {
+		this.productSearch = productSearch;
 	}
 
-	public void setFamily_name(String family_name) {
-		this.family_name = family_name;
-	}
-
-	public String getNickName() {
-		return nickName;
-	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
-	public String getHomepage() {
-		return homepage;
-	}
-
-	public void setHomepage(String homepage) {
-		this.homepage = homepage;
-	}
-
-	public String getSchoolHomepage() {
-		return schoolHomepage;
-	}
-
-	public void setSchoolHomepage(String schoolHomepage) {
-		this.schoolHomepage = schoolHomepage;
-	}
-
-	public String getPersonURI() {
-		return personURI;
-	}
-
-	public void setPersonURI(String personURI) {
-		this.personURI = personURI;
-	}	
+	private ArrayList<String> transactionTypes;
+	
+	private String productCategory;
+	
+	private String productSearch;
 }
