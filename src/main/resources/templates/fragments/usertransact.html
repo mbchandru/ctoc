@@ -68,7 +68,7 @@
             <div class="form-group">
                 <label class="col-xs-4 control-label">Image</label>
                 <div class="col-xs-8">
-	                <input type="file" accept="image/*" class="form-control" th:field="*{imageFiles}" name="imageFile[0]" />
+	                <input type="file" th:onchange="'javascript:uploadFile();'" accept="image/*" class="form-control" th:field="*{imageFiles}" name="imageFile[0]" />
                 </div>
             </div>
             <div class="form-group">
@@ -81,8 +81,8 @@
             <div class="form-group">
                 <label class="col-xs-4 control-label">Image</label>
                 <div class="col-xs-8">
-	                <input type="file" accept="image/*" class="form-control" th:field="*{imageFiles}" name="imageFile[1]" />
-                </div>
+	                <input type="file" id="image1" th:onchange="'javascript:uploadFile();'" accept="image/*" class="form-control" th:field="*{imageFiles}" name="imageFile[1]" />                
+				</div>
             </div>
         </div>
         

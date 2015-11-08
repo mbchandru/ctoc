@@ -1,5 +1,6 @@
 package ciss.in.controllers;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -47,12 +48,6 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.RDFNode;
 
-
-
-
-
-
-
 import ciss.in.jena.RDFStream;
 import ciss.in.models.Demand;
 import ciss.in.models.EmailInfo;
@@ -65,6 +60,7 @@ import ciss.in.security.ReCaptchaResponseVerfier;
 import ciss.in.service.UserService;
 import ciss.in.utils.MailService;
 
+import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -605,14 +601,22 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
     			@ModelAttribute(value="makesOffer") @Valid ArrayList<Offer> makesOffer, BindingResult bindingResultRentManyOffer,
     			@ModelAttribute(value="seeks") @Valid ArrayList<Demand> seeks, BindingResult bindingResultRentManyDemand,
     			
-    			@RequestParam("imageFiles") ArrayList<MultipartFile> imageFiles,
-    			@ModelAttribute(value="new1User") @Valid User new1User, BindingResult bindingResultNew1User) throws MessagingException
+    			@RequestParam("imageFiles") ArrayList<MultipartFile> imageFiles, BindingResult bindingResultImageFiles,
+    			@ModelAttribute(value="new1User") @Valid User new1User, BindingResult bindingResultNew1User) throws MessagingException, IOException
 	{
+		if (bindingResultImageFiles.hasErrors()) {
+			for (int i = 0; i < imageFiles.size(); i ++) {
+				MultipartFile singleImage = imageFiles.get(i);
+				BufferedImage image = ImageIO.read(singleImage.getInputStream());
+				Integer width = image.getWidth();
+				Integer height = image.getHeight();
+				if (width.intValue() < 180 || height.intValue() < 180) {
+					model.addAttribute("WelcomeMessage","Upload image files of 180px width and 180px height");      	
+			    	return "/user/transact";
+				}
+			}
+		}
 
-/*    	if (bindingResultUser.hasErrors()) { 	
-        	model.addAttribute("WelcomeMessage","Enter valid User ID aand password");      	
-        	return "/user/data";
-        }*/
 		HttpSession session = httpServletRequest.getSession();
     	String username = (String) session.getAttribute("username");
 
@@ -804,9 +808,9 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
     	camelContext.getProperties().put(Exchange.LOG_DEBUG_BODY_MAX_CHARS, "6000");
 		ProducerTemplate producerTemplate = camelContext.createProducerTemplate();
 
-    	Endpoint controller2 = camelContext.getEndpoint("direct:channel2");
+ /*   	Endpoint controller2 = camelContext.getEndpoint("direct:channel2");
     	producerTemplate.setDefaultEndpoint(controller2);
-    	producerTemplate.sendBodyAndHeader(out, KafkaConstants.PARTITION_KEY, 1);
+    	producerTemplate.sendBodyAndHeader(out, KafkaConstants.PARTITION_KEY, 1);*/
     	
     	Endpoint controller3 = camelContext.getEndpoint("direct:start-user");
     	producerTemplate = camelContext.createProducerTemplate();

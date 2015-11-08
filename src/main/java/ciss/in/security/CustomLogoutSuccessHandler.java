@@ -28,7 +28,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 			e.printStackTrace();
 		}
 
-		response.sendRedirect("/login");
+		response.sendRedirect("user/login");
     }
 
 }
