@@ -39,7 +39,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.apache.camel.CamelContext;
-import org.apache.camel.component.kafka.KafkaConstants;
+//import org.apache.camel.component.kafka.KafkaConstants;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -1300,6 +1300,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
 	        	user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 	        	user.setRole(2);
 	        	user.setEmail(user.getEmail());
+	        	user.setUserType("Ordinary User");
 	        	userservice.create(user);
 	        	model.addAttribute(user);
 	        	model.addAttribute("WelcomeMessage","Hi Welcome to our site");

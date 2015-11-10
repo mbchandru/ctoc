@@ -18,7 +18,9 @@ public class XMPPConnection {
 	@Autowired
     private XmppConfig xmppConfig;
 	
-	public static XmppClient xmppClient;
+	private XmppClient xmppClient;
+	private RegistrationManager registrationManager;
+	private Registration registration;
     
 	public XmppClient xmppConnect() {
 		//XmppConfig xmppConfig = new XmppConfig();
@@ -30,7 +32,7 @@ public class XMPPConnection {
                 .file(xmppConfig.getHttpBind())
 */               .hostname("localhost")
                 .port(5280)
-                .file("/http-bind/")
+                .path("/http-bind/")
                 .wait(65)
                 .build();
 
@@ -38,25 +40,28 @@ public class XMPPConnection {
         return xmppClient;
 	}
 
-	public void unregisterUser(XmppClient xmppClient/*, User authUser, Authentication authentication*/) throws XmppException {
+	public void unregisterUser(XmppClient xmppClient, User authUser, Authentication authentication) throws XmppException {
 		xmppClient.connect();
-    	RegistrationManager registrationManager = xmppClient.getManager(RegistrationManager.class);
-    	registrationManager.setEnabled(true);
-    	
-    	Registration registration = registrationManager.getRegistration();
-    	if(registration.isRegistered()) {
 
-    		registrationManager.cancelRegistration();
-    	}
+    	registrationManager = xmppClient.getManager(RegistrationManager.class);
+    	registrationManager.setEnabled(true);
+    	registration = registrationManager.getRegistration();
+    	
+    	System.out.println(".getUsername() " + authUser.getUsername().toString() + " " + authUser.getPassword().toString());
+        xmppClient.login(authUser.getUsername().toString(), authUser.getPassword().toString());
+
+        if (xmppClient.isConnected()) {
+        	registrationManager.cancelRegistration();
+        	System.out.println(".getUsernamefhnfdh() " + authUser.getUsername().toString() + " " + authUser.getPassword().toString());
+        }
 	}
 	
 	public void registerUser(XmppClient xmppClient, User authUser, Authentication authentication) {
         try {
-        	System.out.println(".getUsername() " + authUser.getUsername().toString() + " .getPassword " + authUser.getPassword().toString());
         	xmppClient.connect();
-        	RegistrationManager registrationManager = xmppClient.getManager(RegistrationManager.class);
+        	registrationManager = xmppClient.getManager(RegistrationManager.class);
         	registrationManager.setEnabled(true);
-        	Registration registration = registrationManager.getRegistration();
+        	registration = registrationManager.getRegistration();
         	
         	if(!registration.isRegistered()) {
         		registration = Registration.builder()
@@ -67,7 +72,6 @@ public class XMPPConnection {
         	}
         	
             xmppClient.login(authUser.getUsername().toString(), authUser.getPassword().toString());
-
             rocks.xmpp.extensions.httpbind.BoshConnection boshConnection =
                     (rocks.xmpp.extensions.httpbind.BoshConnection) xmppClient.getActiveConnection();
 

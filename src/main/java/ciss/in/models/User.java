@@ -124,9 +124,19 @@ public class User extends Person implements Serializable {
 		this.productSearch = productSearch;
 	}
 
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
 	private ArrayList<String> transactionTypes;
 	
 	private String productCategory;
 	
 	private String productSearch;
+	
+	private String userType;
 }

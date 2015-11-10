@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import rocks.xmpp.core.XmppException;
+import rocks.xmpp.core.session.XmppClient;
 import ciss.in.xmpp.XMPPConnection;
 
 
@@ -21,9 +22,12 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
     	System.out.println("sessionId " + "grhgrh");
 
-		XMPPConnection xmpp = new XMPPConnection();
+		CustomUserDetails authUser = (CustomUserDetails) authentication.getPrincipal();
+
 		try {
-			xmpp.unregisterUser(XMPPConnection.xmppClient/*, authUser, authentication*/);
+			XMPPConnection xmpp = new XMPPConnection();
+	  		XmppClient xmppClient = xmpp.xmppConnect();
+	  		xmpp.unregisterUser(xmppClient, authUser, authentication);
 		} catch (XmppException e) {
 			e.printStackTrace();
 		}

@@ -54,8 +54,8 @@ public class CustomUserAuthenticationSuccessHandler implements AuthenticationSuc
   		// Create xmpp connection with ejabberd for logged in user
   		authentication = SecurityContextHolder.getContext().getAuthentication();
   		XMPPConnection xmpp = new XMPPConnection();
-  		XmppClient xmpClient = xmpp.xmppConnect();
-  		xmpp.registerUser(xmpClient, authUser, authentication);
+  		XmppClient xmppClient = xmpp.xmppConnect();
+  		xmpp.registerUser(xmppClient, authUser, authentication);
 
 /*    	String userName = null;
     	if (!authUser.getUsername().equals("anonymousUser") || !authUser.getUsername().equals(null)) {

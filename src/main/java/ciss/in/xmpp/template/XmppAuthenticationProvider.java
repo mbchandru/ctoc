@@ -50,14 +50,14 @@ public class XmppAuthenticationProvider implements AuthenticationProvider {
         BoshConnectionConfiguration boshConfiguration = BoshConnectionConfiguration.builder()
                 .hostname(xmppConfig.getHost())
                 .port(xmppConfig.getPort())
-                .file(xmppConfig.getHttpBind())
+                .path(xmppConfig.getHttpBind())
                 .wait(60)
                 .build();
 
         XmppClient xmppClient = new XmppClient(xmppConfig.getHost(), boshConfiguration);
 
         try {
-            xmppClient.connect(new Jid((String) authentication.getPrincipal()));
+            xmppClient.connect(Jid.ofDomain((String) authentication.getPrincipal()));
             xmppClient.login((String) authentication.getPrincipal(), (String) authentication.getCredentials());
 
             rocks.xmpp.extensions.httpbind.BoshConnection boshConnection =
@@ -82,6 +82,12 @@ public class XmppAuthenticationProvider implements AuthenticationProvider {
             return new UsernamePasswordAuthenticationToken(xmppUser, authentication.getCredentials(), authorities);
         } catch (XmppException e) {
             e.printStackTrace();
+            try {
+				xmppClient.close();
+			} catch (XmppException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
             throw new XmppAuthenticationException(e.getMessage(), e);
         }
     }
