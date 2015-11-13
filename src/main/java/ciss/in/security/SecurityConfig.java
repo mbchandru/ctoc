@@ -1,9 +1,11 @@
 package ciss.in.security;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -13,20 +15,23 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import ciss.in.repositories.UserRepository;
-import ciss.in.xmpp.template.XmppAuthenticationProvider;
+//import ciss.in.xmpp.template.XmppAuthenticationProvider;
 
 @EnableWebMvcSecurity
 public class SecurityConfig {
 	
-	@Autowired
-    private static XmppAuthenticationProvider xmppAuthenticationProvider;
+	//@Autowired
+    //private static XmppAuthenticationProvider xmppAuthenticationProvider;
 
 /*	@Autowired
     private static CustomLogoutSuccessHandler logoutSuccessHandler;*/
@@ -58,7 +63,20 @@ public class SecurityConfig {
             .deleteCookies("JSESSIONID")
 	        .invalidateHttpSession(true)
 	        .permitAll()
+	        .and().sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true).expiredUrl("/user/login").sessionRegistry(sessionRegistry())
 	            ;
+	    }
+	    
+	    @Bean
+	    public SessionRegistry sessionRegistry() {
+	        SessionRegistry sessionRegistry = new SessionRegistryImpl();
+	        return sessionRegistry;
+	    }
+	    
+	    // Register HttpSessionEventPublisher
+	    @Bean
+	    public static ServletListenerRegistrationBean<EventListener> httpSessionEventPublisher() {
+	        return new ServletListenerRegistrationBean<EventListener>(new HttpSessionEventPublisher());
 	    }
 	    
 	    private CsrfTokenRepository csrfTokenRepository()  { 

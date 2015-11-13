@@ -15,7 +15,7 @@
  *
  */
 
-package ciss.in.xmpp.template;
+package ciss.in.zxing;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -26,6 +26,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import ciss.in.xmpp.template.XmppAuthenticationException;
+import ciss.in.xmpp.template.XmppUser;
 import ciss.in.xmpp.template.config.XmppConfig;
 import rocks.xmpp.addr.Jid;
 import rocks.xmpp.core.XmppException;
@@ -49,7 +51,7 @@ public class XmppAuthenticationProvider implements AuthenticationProvider {
         //Authentication and BOSH pre-binding
         BoshConnectionConfiguration boshConfiguration = BoshConnectionConfiguration.builder()
                 .hostname(xmppConfig.getHost())
-                .port(xmppConfig.getPort())
+                .port(new Integer(xmppConfig.getPort()).intValue())
                 .path(xmppConfig.getHttpBind())
                 .wait(60)
                 .build();

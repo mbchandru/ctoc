@@ -19,12 +19,15 @@ import java.io.IOException;
 
 @Configuration
 public class CustomUserAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-
+	
+	private XmppClient xmppClient;
+	
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
                                         HttpServletResponse httpServletResponse,
                                         Authentication authentication)
             throws IOException, ServletException {
+    	
         //do some logic here if you want something to be done whenever
         //the user successfully logs in.
       	String gRecaptchaResponse = (String) httpServletRequest.getParameter("g-recaptcha-response");
@@ -53,9 +56,14 @@ public class CustomUserAuthenticationSuccessHandler implements AuthenticationSuc
         
   		// Create xmpp connection with ejabberd for logged in user
   		authentication = SecurityContextHolder.getContext().getAuthentication();
+
   		XMPPConnection xmpp = new XMPPConnection();
-  		XmppClient xmppClient = xmpp.xmppConnect();
-  		xmpp.registerUser(xmppClient, authUser, authentication);
+  		xmpp.makeXmppClient();
+  		xmppClient = xmpp.getXmppClient();
+  		
+  		boolean registered = xmpp.registerUser(xmppClient, authUser);
+  		if (registered)
+  			xmpp.loginUser(xmppClient, authUser, authentication);
 
 /*    	String userName = null;
     	if (!authUser.getUsername().equals("anonymousUser") || !authUser.getUsername().equals(null)) {

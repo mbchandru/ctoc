@@ -7,8 +7,8 @@
 	<artifactId>in</artifactId>
 	<version>1.1</version>
 	<packaging>war</packaging>
-	<name>jsonld</name>
-	<description>jsonld</description>
+	<name>jsonls</name>
+	<description>jsonls</description>
 	
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -44,6 +44,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-configuration-processor</artifactId>
+		    <optional>true</optional>
+		</dependency>        
 		<dependency>
    			<groupId>nz.net.ultraq.thymeleaf</groupId>
    			<artifactId>thymeleaf-layout-dialect</artifactId>   			
@@ -247,7 +252,7 @@
 	</dependencies>
 
     <properties>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
         <jena.version>3.0.0</jena.version>
     </properties>
 
@@ -277,40 +282,18 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            
-  <!-- <plugin>
-    <groupId>org.apache.jena</groupId>
-    <artifactId>jena-maven-tools</artifactId>
-    <version>3.0.0</version>
-    <configuration>
-      <includes>
-        <include>src/main/vocabs/*.ttl</include>
-        <include>src/main/vocabs/foaf.rdf</include>
-      </includes>
-      <fileOptions>
-        <source>
-          <input>default</input>
-          <package-name>org.example.test</package-name>
-        </source>
-        <source>
-          Test2.java (only) will contain OntModel declarations
-          <input>src/main/java/ciss/in/jena/owl/schemaorg.owl</input>
-          <ontology>true</ontology>
-        </source>
-      </fileOptions>
-    </configuration>
-    <executions>
-     <execution>
-      <id>schemagen</id>
-       <goals>
-        <goal>translate</goal>
-       </goals>
-      </execution>
-     </executions>
-    </plugin>     -->
-                
         </plugins>
-
+<!-- <resources>
+            <resource>
+                <directory>resources</directory>
+                <targetPath>${project.build.outputDirectory}</targetPath>
+                <includes>
+                    <include>application.properties</include>
+                    <include>xmpp.properties</include>
+                    <include>mail.properties</include>
+                </includes>
+            </resource>
+        </resources> -->
     </build>
 
 </project>

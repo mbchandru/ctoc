@@ -14,19 +14,21 @@ import rocks.xmpp.core.XmppException;
 import rocks.xmpp.core.session.XmppClient;
 import ciss.in.xmpp.XMPPConnection;
 
-
 @Component
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
-
+	
+	private XmppClient xmppClient;
+	
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-    	System.out.println("sessionId " + "grhgrh");
 
-		CustomUserDetails authUser = (CustomUserDetails) authentication.getPrincipal();
+    	CustomUserDetails authUser = (CustomUserDetails) authentication.getPrincipal();
 
 		try {
-			XMPPConnection xmpp = new XMPPConnection();
-	  		XmppClient xmppClient = xmpp.xmppConnect();
+	  		XMPPConnection xmpp = new XMPPConnection();
+	  		xmpp.makeXmppClient();
+	  		xmppClient = xmpp.getXmppClient();
+	  		
 	  		xmpp.unregisterUser(xmppClient, authUser, authentication);
 		} catch (XmppException e) {
 			e.printStackTrace();
