@@ -22,6 +22,7 @@ package ciss.in.xmpp.template;
  */
 public class XmppUser {
     private String username;
+    private String password;
     private String jid;
     private String sid;
     private long rid;
@@ -57,4 +58,12 @@ public class XmppUser {
     public void setRid(long rid) {
         this.rid = rid;
     }
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

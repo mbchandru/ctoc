@@ -8,9 +8,11 @@ import java.io.IOException;
 import org.schema.base.URL;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -48,6 +50,7 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.RDFNode;
 
+import ciss.in.Application;
 import ciss.in.jena.RDFStream;
 import ciss.in.models.Demand;
 import ciss.in.models.EmailInfo;
@@ -59,6 +62,7 @@ import ciss.in.repositories.UserRepository;
 import ciss.in.security.ReCaptchaResponseVerfier;
 import ciss.in.service.UserService;
 import ciss.in.utils.MailService;
+import ciss.in.xmpp.template.XmppUser;
 
 import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
@@ -955,6 +959,27 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
 	    		producerTemplate.sendBodyAndHeader(query,"proc","update");
     		}
         }
+		
+    	// Send info to chat xmpp session
+		Endpoint controller4 = camelContext.getEndpoint("direct:xmpp-start");
+    	producerTemplate = camelContext.createProducerTemplate();
+    	producerTemplate.setDefaultEndpoint(controller4);
+    	String username1 = httpServletRequest.getUserPrincipal().getName();
+    	HttpSession session1 = httpServletRequest.getSession();
+    	Object obj = session1.getAttribute("xmppUser");
+    	XmppUser xmppUser = null;
+       	if (obj instanceof XmppUser) {
+       		xmppUser = (XmppUser) obj;
+       	}
+    	Map<String, Object> ns = new HashMap<String, Object>();
+    	ns.put("host", Application.xmppConfig.getHost());
+    	ns.put("port", Application.xmppConfig.getPort());
+    	ns.put("user", xmppUser.getUsername());
+    	ns.put("password", xmppUser.getPassword());
+    	ns.put("room", "freebuys@conference.localhost");
+    	
+		producerTemplate.sendBodyAndHeaders("Hi All, Apache Camel XMPP here", ns);
+    	
 		return "/user/transact";
 	}
 	

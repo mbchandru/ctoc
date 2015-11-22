@@ -60,12 +60,10 @@
 		var username = "${session.username}";
 	</script>
 	
-	<!-- xmp.. -->
-    <link th:href="@{/converse/css/converse.min.css}" rel="stylesheet"/>
-    <link th:href="@{/converse/main/css/main.css}" rel="stylesheet"/>
-
-    <script th:src="@{/converse/main/js/require.js}"></script>
-    <script th:src="@{/converse/js/converse.min.js}"></script>
+	<!-- xmp... -->
+	<link rel="stylesheet" type="text/css" media="screen" th:href="@{/converse/css/converse.min.css}"/>
+	<link rel="stylesheet" type="text/css" media="screen" th:href="@{/converse/css/main.css}"/>
+	<script th:src="@{/converse/builds/converse.min.js}"></script>
 </head>
 
 <body class="homepage">
@@ -104,7 +102,11 @@
 	    <section layout:fragment="contact">
 	      <div th:include="fragments/contact :: contact"></div>
 	    </section> 
-	    	
+
+	    <section layout:fragment="xmpp">
+	      <div th:include="fragments/xmpp :: xmpp"></div>
+	    </section> 
+	    	    	
 	    <footer layout:fragment="footer">
 	      <div th:include="fragments/footer :: footer"></div>
 	    </footer> 
@@ -153,4 +155,32 @@
 	<!-- custom script -->
 	<script th:src="@{/assets/script.js}"></script>		
 </body>
+<script th:inline="javascript">
+$(document).ready(function(){
+    $.get("/in/config", function(data, status){
+        $('#jid').html(data.jid);
+        require(['converse'], function (converse) {
+            converse.initialize({
+                prebind:true,
+                prebind_url: data.prebindUrl,
+                bosh_service_url: data.bindUrl,
+                jid: data.jid,
+                i18n: locales.en,
+                show_controlbox_by_default: true,
+                keepalive: true,
+                allow_muc: true,
+                play_sounds: true,
+                show_only_online_users: true,
+                allow_logout: false,
+                hide_muc_server: true,
+                hide_offline_users: true,
+                allow_registration: false
+            });
+            converse.listen.on('ready', function(ev) {
+                converse.rooms.open('freebuys@conference.localhost');
+            });
+        });
+    });
+});
+</script> 
 </html>

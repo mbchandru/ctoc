@@ -1,5 +1,6 @@
 package ciss.in.camel;
 
+import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,7 @@ import ciss.in.jena.fuseki.processors.UpdateProcessor;
 public class WebRouteBuilder extends RouteBuilder {
 	
     final Logger logger = LoggerFactory.getLogger(RouteBuilder.class);
-
+    
 	@Override
 	public void configure() throws Exception {
 		
@@ -30,6 +31,11 @@ public class WebRouteBuilder extends RouteBuilder {
 		//To Fuseki for search
 		from("direct:search").process(new QueryProcessor()).to("restlet:http://localhost:" + "3030" + "/coaf?restletMethod=post" )
 		.to("log:user4")
+		.end();
+		
+		//from user to xmpp server
+		from("direct:xmpp-start").process(new XmppProcessor())//.to("xmpp://superman@jabber.org/?password=secret&room=krypton@conference.jabber.org")
+		.to("log:user5")
 		.end();
 	}	
 }

@@ -17,6 +17,9 @@
 
 package ciss.in.xmpp.template.rest;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,7 +37,13 @@ public class XmppPrebindResource {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public XmppUser prebind() {
-        return (XmppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public XmppUser prebind(HttpServletRequest httpServletRequest) {
+    	HttpSession session = httpServletRequest.getSession();
+    	Object obj = session.getAttribute("xmppUser");
+    	XmppUser xmppUser = null;
+       	if (obj instanceof XmppUser) {
+       		xmppUser = (XmppUser) obj;
+       	}
+       	return xmppUser;
     }
 }

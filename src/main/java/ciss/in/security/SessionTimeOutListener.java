@@ -29,7 +29,6 @@ public class SessionTimeOutListener implements ApplicationListener<ApplicationEv
 			   	  		xmpp.makeXmppClient();
 			   	  		xmppClient = xmpp.getXmppClient();			   	  		
 			   	  		xmpp.unregisterUser(xmppClient, authUser, authentication);
-			    		System.out.println("User " + authUser.getUsername() + " session ended.");
 			   		} catch (XmppException e) {
 			   			e.printStackTrace();
 			   		}

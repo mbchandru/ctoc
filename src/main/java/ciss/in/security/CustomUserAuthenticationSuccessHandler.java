@@ -9,6 +9,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import rocks.xmpp.core.session.XmppClient;
 import ciss.in.xmpp.XMPPConnection;
+import ciss.in.xmpp.template.XmppUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ import java.io.IOException;
 public class CustomUserAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 	
 	private XmppClient xmppClient;
+	
+	private XmppUser xmppUser;
 	
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
@@ -63,7 +66,9 @@ public class CustomUserAuthenticationSuccessHandler implements AuthenticationSuc
   		
   		boolean registered = xmpp.registerUser(xmppClient, authUser);
   		if (registered)
-  			xmpp.loginUser(xmppClient, authUser, authentication);
+  			xmppUser = new XmppUser();
+  			xmppUser = xmpp.loginUser(xmppClient, authUser, authentication, "localhost");
+  			session.setAttribute("xmppUser", xmppUser);
 
 /*    	String userName = null;
     	if (!authUser.getUsername().equals("anonymousUser") || !authUser.getUsername().equals(null)) {

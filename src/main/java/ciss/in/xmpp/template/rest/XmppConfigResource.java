@@ -17,7 +17,6 @@
 
 package ciss.in.xmpp.template.rest;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +27,9 @@ import ciss.in.xmpp.template.XmppUser;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by kamran on 05/08/15.
@@ -42,11 +44,17 @@ public class XmppConfigResource {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public Map<String, Object> config() {
+    public Map<String, Object> config(HttpServletRequest httpServletRequest) {
+    	HttpSession session = httpServletRequest.getSession();
+    	Object obj = session.getAttribute("xmppUser");
+    	String jid = null;
+       	if (obj instanceof XmppUser) {
+       		jid = ((XmppUser) obj).getJid();
+       	}
         Map<String, Object> config = new HashMap<String, Object>();
         config.put(PREBIND_URL, Application.xmppConfig.getPrebindUrl());
-        config.put(BIND_URL, "http://" + Application.xmppConfig.getHost() + ":" + Application.xmppConfig.getPort() + "/" + Application.xmppConfig.getHttpBind());
-        config.put(JID, ((XmppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getJid());
+        config.put(BIND_URL, "http://" + Application.xmppConfig.getHost() + ":" + Application.xmppConfig.getPort() + Application.xmppConfig.getHttpBind());
+        config.put(JID, jid);
 
         return config;
     }

@@ -16,7 +16,6 @@ import ciss.in.xmpp.template.config.XmppConfig;
 
 public class XMPPConnection {
 
-	//@Autowired
 	private XmppConfig xmppConfig;
 	
 	private XmppClient xmppClient;
@@ -35,7 +34,6 @@ public class XMPPConnection {
 	public void makeXmppClient() {
 		buildBosh();
         xmppClient = new XmppClient(xmppConfig.getHost(), boshConfiguration);
-		//return xmppClient;
 	}
 	
 	public void setXmppClient(XmppClient xmppClient) {
@@ -54,17 +52,24 @@ public class XMPPConnection {
         		.hostname(xmppConfig.getHost())
                 .port(xmppConfig.getPort())
                 .path(xmppConfig.getHttpBind())
-                .wait(65)
+                .wait(10)
                 .build();		
 	}
 	
 	public void unregisterUser(XmppClient xmppClient, User authUser, Authentication authentication) throws XmppException {
-    	xmppClient.connect();
-        xmppClient.login(authUser.getUsername(), authUser.getPassword());
-		
+		xmppClient.connect();
+		xmppClient.login(authUser.getUsername(), authUser.getPassword());
+
         registrationManager = xmppClient.getManager(RegistrationManager.class);
     	registrationManager.setEnabled(true);
-    	registrationManager.cancelRegistration();
+        registration = registrationManager.getRegistration();
+		
+		if(registration.isRegistered()) {
+    		System.out.println("User " + authUser.getUsername() + " session ended.");
+			registrationManager.cancelRegistration();
+			xmppClient.close();
+    	}
+        //xmppClient.close();
 	}
 	
 	public boolean registerUser(XmppClient xmppClient, User authUser) {
@@ -92,9 +97,10 @@ public class XMPPConnection {
         return registered;
 	}
 	
-	public void loginUser(XmppClient xmppClient, User authUser, Authentication authentication) {
+	public XmppUser loginUser(XmppClient xmppClient, User authUser, Authentication authentication, String domain) {
+		XmppUser xmppUser;
         try {
-            xmppClient.login(authUser.getUsername().toString(), authUser.getPassword().toString());
+            xmppClient.login(authUser.getUsername().toString(), authUser.getPassword().toString(), domain);
             rocks.xmpp.extensions.httpbind.BoshConnection boshConnection =
                     (rocks.xmpp.extensions.httpbind.BoshConnection) xmppClient.getActiveConnection();
 
@@ -110,14 +116,13 @@ public class XMPPConnection {
             Application.chatRoom.addOccupantListener(e -> {
 	            if (e.getType() == OccupantEvent.Type.ENTERED) {
 	                System.out.println(e.getOccupant() + " has entered the room");
-	                Application.chatRoom.sendMessage("Hello All! This is " + e.getOccupant());
+	                //Application.chatRoom.sendMessage("Hello All! This is " + e.getOccupant() + " joined");
 	            }
 	        });
-            Application.chatRoom.sendMessage("Hello All! " + authUser.getUsername().toString());
 	        
-	        
-            XmppUser xmppUser = new XmppUser();
-            xmppUser.setUsername((String) authUser.getUsername());
+            xmppUser = new XmppUser();
+            xmppUser.setUsername(authUser.getUsername());
+            xmppUser.setPassword(authUser.getPassword());
             xmppUser.setJid(xmppClient.getConnectedResource().toString());
             xmppUser.setSid(sessionId);
             xmppUser.setRid(rid);
@@ -125,5 +130,6 @@ public class XMPPConnection {
             e.printStackTrace();
             throw new XmppAuthenticationException(e.getMessage(), e);
         }
+        return xmppUser;
 	}
 }

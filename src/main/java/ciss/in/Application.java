@@ -43,7 +43,7 @@ public class Application /*extends SpringBootServletInitializer*/ {
 		Executors.newFixedThreadPool(1).execute(() -> {
         try {
 	  		xmppClient.connect();
-	  		xmppClient.login("admin", "admin");
+	  		xmppClient.login("admin", "admin", "localhost");
 
 	  		MultiUserChatManager multiUserChatManager = xmppClient.getManager(MultiUserChatManager.class);
 	        ChatService chatService = multiUserChatManager.createChatService(Jid.of("conference." + xmppClient.getDomain()));
