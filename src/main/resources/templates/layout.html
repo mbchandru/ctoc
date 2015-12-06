@@ -177,7 +177,7 @@ $(document).ready(function(){
                 allow_registration: false
             });
             converse.listen.on('ready', function(ev) {
-                converse.rooms.open('freebuys@conference.localhost');
+                converse.rooms.open('freebuys@conference.' + data.host);
             });
         });
     });

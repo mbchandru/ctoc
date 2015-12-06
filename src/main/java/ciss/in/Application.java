@@ -17,6 +17,7 @@ import rocks.xmpp.extensions.muc.ChatService;
 import rocks.xmpp.extensions.muc.MultiUserChatManager;
 import rocks.xmpp.extensions.muc.OccupantEvent;
 import ciss.in.xmpp.XMPPConnection;
+
 import ciss.in.xmpp.template.config.XmppConfig;
 
 @EnableConfigurationProperties(XmppConfig.class)
@@ -30,7 +31,7 @@ public class Application /*extends SpringBootServletInitializer*/ {
 	
 	private static XmppClient xmppClient;
 	
-    public static void main(String[] args) {
+    public static void main(String[] args) throws XmppException {
         @SuppressWarnings("unused")
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
@@ -39,19 +40,20 @@ public class Application /*extends SpringBootServletInitializer*/ {
   		
   		xmpp.makeXmppClient();
   		xmppClient = xmpp.getXmppClient();
-  		
-		Executors.newFixedThreadPool(1).execute(() -> {
+
+    	xmppClient.connect();
+    	xmppClient.login(xmppConfig.getAdmin(), xmppConfig.getAdminPassword(), xmppConfig.getHost());
+
+    	Executors.newFixedThreadPool(1).execute(() -> {
         try {
-	  		xmppClient.connect();
-	  		xmppClient.login("admin", "admin", "localhost");
 
 	  		MultiUserChatManager multiUserChatManager = xmppClient.getManager(MultiUserChatManager.class);
 	        ChatService chatService = multiUserChatManager.createChatService(Jid.of("conference." + xmppClient.getDomain()));
 	        chatRoom = chatService.createRoom("FreeBuys");
-	        
+
 	        chatRoom.addOccupantListener(e -> {
 	            if (e.getType() == OccupantEvent.Type.ENTERED) {
-	                System.out.println(e.getOccupant() + " has entered the room");
+	                System.out.println(e.getOccupant() + " has entered the chat session and joined 'FreeBuys' conference room");
 	                chatRoom.sendMessage("Hello All! This is " + e.getOccupant());
 	            }
 	        });
@@ -59,7 +61,7 @@ public class Application /*extends SpringBootServletInitializer*/ {
 			chatRoom.enter("admin");
 	        chatRoom.sendMessage("Hello All!, This is CXC Admin");
 	        
-		} catch (XmppException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
         });

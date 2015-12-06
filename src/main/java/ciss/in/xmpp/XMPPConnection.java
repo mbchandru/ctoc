@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import rocks.xmpp.core.XmppException;
 import rocks.xmpp.core.session.XmppClient;
 import rocks.xmpp.extensions.httpbind.BoshConnectionConfiguration;
-import rocks.xmpp.extensions.muc.OccupantEvent;
+
 import rocks.xmpp.extensions.register.RegistrationManager;
 import rocks.xmpp.extensions.register.model.Registration;
 import ciss.in.Application;
@@ -87,7 +87,7 @@ public class XMPPConnection {
         	
         	if(!registration.isRegistered()) {
         		registrationManager.register(registration);
-        		System.out.println("Chat User " + registration.getUsername() + " got registered and joined 'FreeBuys' conference room");
+        		System.out.println("Chat User " + registration.getUsername() + " got registered");
         		registered = true;
         	}
         } catch (XmppException e) {
@@ -97,10 +97,11 @@ public class XMPPConnection {
         return registered;
 	}
 	
-	public XmppUser loginUser(XmppClient xmppClient, User authUser, Authentication authentication, String domain) {
+	public XmppUser loginUser(XmppClient xmppClient, String username, String password, String domain) {
 		XmppUser xmppUser;
         try {
-            xmppClient.login(authUser.getUsername().toString(), authUser.getPassword().toString(), domain);
+        	xmppClient.connect();
+            xmppClient.login(username, password, domain);
             rocks.xmpp.extensions.httpbind.BoshConnection boshConnection =
                     (rocks.xmpp.extensions.httpbind.BoshConnection) xmppClient.getActiveConnection();
 
@@ -113,16 +114,16 @@ public class XMPPConnection {
             System.out.println("RID: " + rid);
 
             //Enter chat room
-            Application.chatRoom.addOccupantListener(e -> {
+/*            Application.chatRoom.addOccupantListener(e -> {
 	            if (e.getType() == OccupantEvent.Type.ENTERED) {
-	                System.out.println(e.getOccupant() + " has entered the room");
+	                System.out.println(e.getOccupant() + " has entered the chat session and joined 'FreeBuys' conference room");
 	                //Application.chatRoom.sendMessage("Hello All! This is " + e.getOccupant() + " joined");
 	            }
-	        });
+	        });*/
 	        
             xmppUser = new XmppUser();
-            xmppUser.setUsername(authUser.getUsername());
-            xmppUser.setPassword(authUser.getPassword());
+            xmppUser.setUsername(username);
+            xmppUser.setPassword(password);
             xmppUser.setJid(xmppClient.getConnectedResource().toString());
             xmppUser.setSid(sessionId);
             xmppUser.setRid(rid);

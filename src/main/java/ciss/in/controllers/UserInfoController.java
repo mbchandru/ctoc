@@ -5,14 +5,22 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+/*import org.jivesoftware.smack.AbstractXMPPConnection;
+import org.jivesoftware.smack.SmackException;
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.chat.Chat;
+import org.jivesoftware.smack.chat.ChatManager;
+import org.jivesoftware.smack.roster.Roster;
+import org.jivesoftware.smack.tcp.XMPPTCPConnection;
+import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
+import ciss.in.xmpp.template.XmppUser;
+*/
 import org.schema.base.URL;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -41,6 +49,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.apache.camel.CamelContext;
+
 //import org.apache.camel.component.kafka.KafkaConstants;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
@@ -62,7 +71,6 @@ import ciss.in.repositories.UserRepository;
 import ciss.in.security.ReCaptchaResponseVerfier;
 import ciss.in.service.UserService;
 import ciss.in.utils.MailService;
-import ciss.in.xmpp.template.XmppUser;
 
 import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
@@ -81,7 +89,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 	
 	static final Logger logger = LoggerFactory.getLogger(UserInfoController.class);
     
-	String service = "http://localhost:3030/coaf/query";
+	String service = "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
 
 	String prefix = 
     		
@@ -717,6 +725,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                 if (!"".equalsIgnoreCase(fileName)) {
                     // Handle file content - multipartFile.getInputStream()
                     try {
+                    	String domainHost = Application.xmppConfig.getDomainHost();
                     	switch (i) {
                     	case 0:
                     		filePath  = theFile.getAbsolutePath() + "/exchange1/";
@@ -724,7 +733,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getMakesOffer().get(1).getItemOffered().setImage(new URL().to("http://localhost:8080/in/store/" + username + "/exchange1/" + fileName));
+    						userNow.getMakesOffer().get(1).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/exchange1/" + fileName));
                     		break;
                     	case 1: 
                     		filePath  = theFile.getAbsolutePath() + "/exchange2/";
@@ -732,7 +741,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getSeeks().get(2).getItemOffered().setImage(new URL().to("http://localhost:8080/in/store/" + username + "/exchange2/" + fileName));
+    						userNow.getSeeks().get(2).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/exchange2/" + fileName));
                     		break;
                     	case 2: 
                     		filePath  = theFile.getAbsolutePath() + "/sell/";
@@ -740,7 +749,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getMakesOffer().get(0).getItemOffered().setImage(new URL().to("http://localhost:8080/in/store/" + username + "/sell/" + fileName));
+    						userNow.getMakesOffer().get(0).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/sell/" + fileName));
                     		break;
                     	case 3: 
                     		filePath  = theFile.getAbsolutePath() + "/loan/";
@@ -748,7 +757,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getMakesOffer().get(2).getItemOffered().setImage(new URL().to("http://localhost:8080/in/store/" + username + "/loan/" + fileName));
+    						userNow.getMakesOffer().get(2).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/loan/" + fileName));
                     		break;
                     	case 4: 
                     		filePath  = theFile.getAbsolutePath() + "/give/";
@@ -756,7 +765,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getMakesOffer().get(3).getItemOffered().setImage(new URL().to("http://localhost:8080/in/store/" + username + "/give/" + fileName));
+    						userNow.getMakesOffer().get(3).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/give/" + fileName));
                     		break;
                     	case 5: 
                     		filePath  = theFile.getAbsolutePath() + "/rent/";
@@ -764,7 +773,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getMakesOffer().get(4).getItemOffered().setImage(new URL().to("http://localhost:8080/in/store/" + username + "/rent/" + fileName));
+    						userNow.getMakesOffer().get(4).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/rent/" + fileName));
                     		break;
                     	}
 					} catch (IllegalStateException | IOException e) {
@@ -775,8 +784,8 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
             }
         }
 
-		//buyProduct.setImage(new URL("http://localhost:8080/in/store/" + username + "buy/" + fileName));
-    	//wantfreeProduct.setImage(new URL("http://localhost:8080/in/store/" + username + "want/" + fileName));
+		//buyProduct.setImage(new URL("http://" + domainHost + "/in/store/" + username + "buy/" + fileName));
+    	//wantfreeProduct.setImage(new URL("http://" + domainHost + "/in/store/" + username + "want/" + fileName));
     			
         userservice.update(userNow);
         
@@ -804,7 +813,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
         
     	emailForm.setProducts(products);
     	//emailForm.setProductTransactions(productTransactions);
-        mailserve.emailTemplate(emailForm, httpServletRequest, httpServletResponse, context, new Locale("en", "US"), "Vibhu", "admin@ciss.in");
+        //mailserve.emailTemplate(emailForm, httpServletRequest, httpServletResponse, context, new Locale("en", "US"), "Vibhu", "admin@ciss.in");
 
     	RDFStream rdf = new RDFStream();
     	ByteArrayOutputStream out = (ByteArrayOutputStream) rdf.createRDF(userNow);
@@ -821,7 +830,6 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
     	producerTemplate.setDefaultEndpoint(controller3);
 
     	//Search
-    	String service = "http://localhost:3030/coaf/query";
     	String queryString = prefix +
 				
     			"SELECT ?person" +
@@ -959,27 +967,40 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
 	    		producerTemplate.sendBodyAndHeader(query,"proc","update");
     		}
         }
-		
-    	// Send info to chat xmpp session
-		Endpoint controller4 = camelContext.getEndpoint("direct:xmpp-start");
-    	producerTemplate = camelContext.createProducerTemplate();
-    	producerTemplate.setDefaultEndpoint(controller4);
-    	String username1 = httpServletRequest.getUserPrincipal().getName();
-    	HttpSession session1 = httpServletRequest.getSession();
-    	Object obj = session1.getAttribute("xmppUser");
-    	XmppUser xmppUser = null;
-       	if (obj instanceof XmppUser) {
-       		xmppUser = (XmppUser) obj;
-       	}
-    	Map<String, Object> ns = new HashMap<String, Object>();
-    	ns.put("host", Application.xmppConfig.getHost());
-    	ns.put("port", Application.xmppConfig.getPort());
-    	ns.put("user", xmppUser.getUsername());
-    	ns.put("password", xmppUser.getPassword());
-    	ns.put("room", "freebuys@conference.localhost");
-    	
-		producerTemplate.sendBodyAndHeaders("Hi All, Apache Camel XMPP here", ns);
-    	
+       	Application.chatRoom.sendMessage("Hello All! This is my product offering. Please chck your email for more details.");
+
+       	/*try {
+    		Object obj = session.getAttribute("xmppUser");
+
+        	XmppUser xmppUser = null;
+           	if (obj instanceof XmppUser) {
+           		xmppUser = (XmppUser) obj;
+           	}
+
+           	XMPPTCPConnectionConfiguration config = XMPPTCPConnectionConfiguration.builder()
+           			.setHost(Application.xmppConfig.getHost())
+    				.setPort(Application.xmppConfig.getListenPost())
+    				.setServiceName(Application.xmppConfig.getHost())
+    				.setSecurityMode(XMPPTCPConnectionConfiguration.SecurityMode.disabled)
+    				.build();
+           	AbstractXMPPConnection connection = new XMPPTCPConnection(config);
+       		connection.setPacketReplyTimeout(10000);
+       		Roster roster = Roster.getInstanceFor(connection);
+            roster.setSubscriptionMode(Roster.SubscriptionMode.accept_all);
+            roster.setRosterLoadedAtLogin(false);
+			connection.connect();
+			
+	       	connection.login(xmppUser.getUsername(), xmppUser.getPassword());
+	       	ChatManager chatmanager = ChatManager.getInstanceFor(connection);
+	       	
+            Chat newChat = chatmanager.createChat(xmppUser.getUsername()+"@"+ Application.xmppConfig.getHost());
+            newChat.getListeners();
+            newChat.sendMessage("Hi CXCAdmin !, This is "+ xmppUser.getUsername());
+            
+            connection.disconnect();
+		} catch (SmackException | XMPPException | IOException e) {
+			e.printStackTrace();
+		}*/
 		return "/user/transact";
 	}
 	

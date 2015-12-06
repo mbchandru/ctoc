@@ -28,6 +28,12 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(locations = "classpath:xmpp.properties", prefix = "xmpp")
 public class XmppConfig {
 	
+	private String domainHost;
+	private String fusekiHost;
+	private String kafkaHost;
+	private String zookeeperHost;
+	private String zookeeperPort;
+	
     private String host;
     
     private int port;
@@ -35,6 +41,10 @@ public class XmppConfig {
     private String httpBind;
     
     private String prebindUrl;
+    
+    private String admin;
+    private String adminPassword;
+    private int listenPost;
     
 	public String getHost() {
 		return host;
@@ -59,5 +69,53 @@ public class XmppConfig {
 	}
 	public void setPrebindUrl(String prebindUrl) {
 		this.prebindUrl = prebindUrl;
+	}
+	public String getAdmin() {
+		return admin;
+	}
+	public void setAdmin(String admin) {
+		this.admin = admin;
+	}
+	public String getAdminPassword() {
+		return adminPassword;
+	}
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
+	}
+	public int getListenPost() {
+		return listenPost;
+	}
+	public void setListenPost(int listenPost) {
+		this.listenPost = listenPost;
+	}
+	public String getDomainHost() {
+		return domainHost;
+	}
+	public void setDomainHost(String domainHost) {
+		this.domainHost = domainHost;
+	}
+	public String getFusekiHost() {
+		return fusekiHost;
+	}
+	public void setFusekiHost(String fusekiHost) {
+		this.fusekiHost = fusekiHost;
+	}
+	public String getKafkaHost() {
+		return kafkaHost;
+	}
+	public void setKafkaHost(String kafkaHost) {
+		this.kafkaHost = kafkaHost;
+	}
+	public String getZookeeperHost() {
+		return zookeeperHost;
+	}
+	public void setZookeeperHost(String zookeeperHost) {
+		this.zookeeperHost = zookeeperHost;
+	}
+	public String getZookeeperPort() {
+		return zookeeperPort;
+	}
+	public void setZookeeperPort(String zookeeperPort) {
+		this.zookeeperPort = zookeeperPort;
 	}
 }

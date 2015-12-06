@@ -8,6 +8,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.web.context.request.RequestContextHolder;
 
 import rocks.xmpp.core.session.XmppClient;
+import ciss.in.Application;
 import ciss.in.xmpp.XMPPConnection;
 import ciss.in.xmpp.template.XmppUser;
 
@@ -33,10 +34,11 @@ public class CustomUserAuthenticationSuccessHandler implements AuthenticationSuc
     	
         //do some logic here if you want something to be done whenever
         //the user successfully logs in.
-      	String gRecaptchaResponse = (String) httpServletRequest.getParameter("g-recaptcha-response");
+/*      	String gRecaptchaResponse = (String) httpServletRequest.getParameter("g-recaptcha-response");
         ReCaptchaResponseVerfier veri = new ReCaptchaResponseVerfier();
-        boolean verify = veri.verifyRecaptcha(gRecaptchaResponse);
+        boolean verify = veri.verifyRecaptcha(gRecaptchaResponse);*/
         
+    	boolean verify = true;
     	HttpSession session = httpServletRequest.getSession();
     	String returnValue = null;
 
@@ -65,11 +67,13 @@ public class CustomUserAuthenticationSuccessHandler implements AuthenticationSuc
   		xmppClient = xmpp.getXmppClient();
   		
   		boolean registered = xmpp.registerUser(xmppClient, authUser);
-  		if (registered)
+  		if (registered) {
   			xmppUser = new XmppUser();
-  			xmppUser = xmpp.loginUser(xmppClient, authUser, authentication, "localhost");
+  			String username = authUser.getUsername();
+  			String password = authUser.getPassword();
+  			xmppUser = xmpp.loginUser(xmppClient, username, password, Application.xmppConfig.getHost());
   			session.setAttribute("xmppUser", xmppUser);
-
+  		}
 /*    	String userName = null;
     	if (!authUser.getUsername().equals("anonymousUser") || !authUser.getUsername().equals(null)) {
 	    	Object principal1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

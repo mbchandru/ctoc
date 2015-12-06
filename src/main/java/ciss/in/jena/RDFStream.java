@@ -10,6 +10,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
 
+import ciss.in.Application;
 import ciss.in.jena.owl.Schemaorg;
 import ciss.in.models.User;
  
@@ -22,7 +23,7 @@ public class RDFStream extends Object {
 
 		model.setNsPrefix("schemaorg", "http://schema.org/");
 
-    	String personURL    = "http://localhost:8080/in/" + userNow.getUsername();
+    	String personURL    = "http://" + Application.xmppConfig.getDomainHost() + "/in/" + userNow.getUsername();
 
     	Resource talha = model.createResource(personURL, Schemaorg.Person);
     	
