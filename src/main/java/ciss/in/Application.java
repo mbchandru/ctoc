@@ -1,5 +1,7 @@
 package ciss.in;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,6 @@ import rocks.xmpp.extensions.muc.ChatService;
 import rocks.xmpp.extensions.muc.MultiUserChatManager;
 import rocks.xmpp.extensions.muc.OccupantEvent;
 import ciss.in.xmpp.XMPPConnection;
-
 import ciss.in.xmpp.template.config.XmppConfig;
 
 @EnableConfigurationProperties(XmppConfig.class)
@@ -25,11 +26,13 @@ import ciss.in.xmpp.template.config.XmppConfig;
 @ImportResource("classpath:mongodb.xml")
 public class Application /*extends SpringBootServletInitializer*/ {
 	public static ChatRoom chatRoom;
-	
+
+	public static XMPPConnection xmpp;
+
 	@Autowired
 	public static XmppConfig xmppConfig;
 	
-	private static XmppClient xmppClient;
+	public static XmppClient xmppClient;
 	
     public static void main(String[] args) throws XmppException {
         @SuppressWarnings("unused")
@@ -40,31 +43,63 @@ public class Application /*extends SpringBootServletInitializer*/ {
   		
   		xmpp.makeXmppClient();
   		xmppClient = xmpp.getXmppClient();
-
+  		
     	xmppClient.connect();
+
     	xmppClient.login(xmppConfig.getAdmin(), xmppConfig.getAdminPassword(), xmppConfig.getHost());
 
-    	Executors.newFixedThreadPool(1).execute(() -> {
+    	//Executors.newFixedThreadPool(1).execute(() -> {
         try {
 
 	  		MultiUserChatManager multiUserChatManager = xmppClient.getManager(MultiUserChatManager.class);
 	        ChatService chatService = multiUserChatManager.createChatService(Jid.of("conference." + xmppClient.getDomain()));
+	        
+/*	        List<ChatRoom> publicRooms = chatService.discoverRooms();
+	        Iterator<ChatRoom> iterator = publicRooms.iterator();
+	    	while (iterator.hasNext()) {
+	    		System.out.println(iterator.next());
+	    	}*/
 	        chatRoom = chatService.createRoom("FreeBuys");
 
 	        chatRoom.addOccupantListener(e -> {
-	            if (e.getType() == OccupantEvent.Type.ENTERED) {
-	                System.out.println(e.getOccupant() + " has entered the chat session and joined 'FreeBuys' conference room");
-	                chatRoom.sendMessage("Hello All! This is " + e.getOccupant());
+	            if (!e.getOccupant().isSelf()) {
+	                switch (e.getType()) {
+	                    case ENTERED:
+	    	                System.out.println(e.getOccupant().getNick() + " has entered the chat session and joined 'FreeBuys' conference room");
+	                        break;
+	                    case EXITED:
+	                        System.out.println(e.getOccupant().getNick() + " has exited the room.");
+	                        break;
+	                    case KICKED:
+	                        System.out.println(e.getOccupant().getNick() + " has been kicked out of the room.");
+	                        break;
+						case BANNED:
+							break;
+						case MEMBERSHIP_REVOKED:
+							break;
+						case NICKNAME_CHANGED:
+							break;
+						case ROOM_BECAME_MEMBERS_ONLY:
+							break;
+						case ROOM_DESTROYED:
+							break;
+						case STATUS_CHANGED:
+			                System.out.println(e.getOccupant() + " had changed status");
+							break;
+						case SYSTEM_SHUTDOWN:
+							break;
+						default:
+							break;
+	                }
 	            }
 	        });
-
-			chatRoom.enter("admin");
-	        chatRoom.sendMessage("Hello All!, This is CXC Admin");
 	        
+	        chatRoom.enter(xmppConfig.getAdmin());
+            chatRoom.sendMessage("Hello All! This is " + xmppConfig.getAdmin());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        });
+        //});
     }
     
 	@Autowired

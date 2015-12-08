@@ -6,13 +6,13 @@ import org.springframework.security.core.userdetails.User;
 import rocks.xmpp.core.XmppException;
 import rocks.xmpp.core.session.XmppClient;
 import rocks.xmpp.extensions.httpbind.BoshConnectionConfiguration;
-
 import rocks.xmpp.extensions.register.RegistrationManager;
 import rocks.xmpp.extensions.register.model.Registration;
 import ciss.in.Application;
 import ciss.in.xmpp.template.XmppAuthenticationException;
 import ciss.in.xmpp.template.XmppUser;
 import ciss.in.xmpp.template.config.XmppConfig;
+import rocks.xmpp.extensions.muc.OccupantEvent;
 
 public class XMPPConnection {
 
@@ -52,7 +52,7 @@ public class XMPPConnection {
         		.hostname(xmppConfig.getHost())
                 .port(xmppConfig.getPort())
                 .path(xmppConfig.getHttpBind())
-                .wait(10)
+                .wait(15)
                 .build();		
 	}
 	
@@ -100,8 +100,9 @@ public class XMPPConnection {
 	public XmppUser loginUser(XmppClient xmppClient, String username, String password, String domain) {
 		XmppUser xmppUser;
         try {
-        	xmppClient.connect();
+        	//xmppClient.connect();
             xmppClient.login(username, password, domain);
+
             rocks.xmpp.extensions.httpbind.BoshConnection boshConnection =
                     (rocks.xmpp.extensions.httpbind.BoshConnection) xmppClient.getActiveConnection();
 
@@ -113,14 +114,6 @@ public class XMPPConnection {
             //System.out.println("SID: " + sessionId);
             System.out.println("RID: " + rid);
 
-            //Enter chat room
-/*            Application.chatRoom.addOccupantListener(e -> {
-	            if (e.getType() == OccupantEvent.Type.ENTERED) {
-	                System.out.println(e.getOccupant() + " has entered the chat session and joined 'FreeBuys' conference room");
-	                //Application.chatRoom.sendMessage("Hello All! This is " + e.getOccupant() + " joined");
-	            }
-	        });*/
-	        
             xmppUser = new XmppUser();
             xmppUser.setUsername(username);
             xmppUser.setPassword(password);

@@ -21,5 +21,5 @@ public class GreetingController  extends WebMvcConfigurerAdapter {
     {
         registry.addResourceHandler("/myicon.ico").addResourceLocations("/myicon.ico");
         registry.addResourceHandler("/robots.txt").addResourceLocations("/robots.txt");
-    }    
+    }
 }

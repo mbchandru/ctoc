@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.context.request.RequestContextHolder;
 
+import rocks.xmpp.core.XmppException;
 import rocks.xmpp.core.session.XmppClient;
 import ciss.in.Application;
 import ciss.in.xmpp.XMPPConnection;
@@ -71,6 +72,7 @@ public class CustomUserAuthenticationSuccessHandler implements AuthenticationSuc
   			xmppUser = new XmppUser();
   			String username = authUser.getUsername();
   			String password = authUser.getPassword();
+  			
   			xmppUser = xmpp.loginUser(xmppClient, username, password, Application.xmppConfig.getHost());
   			session.setAttribute("xmppUser", xmppUser);
   		}

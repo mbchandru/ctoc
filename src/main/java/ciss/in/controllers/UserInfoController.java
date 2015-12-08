@@ -89,7 +89,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 	
 	static final Logger logger = LoggerFactory.getLogger(UserInfoController.class);
     
-	String service = "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
+	String service;
 
 	String prefix = 
     		
@@ -100,6 +100,10 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 			"Prefix j.3:   <http://schema.org/Offer/> " + 
 			"Prefix j.2:   <http://schema.org/Product/> " + 
 			"Prefix j.4:   <http://schema.org/PriceSpecification/> "; 
+	
+/*	public UserInfoController() {
+		this.service= "http://"+ Application.xmppConfig.getFusekiHost() "localhost" + ":3030/coaf/query";
+	}*/
 	
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -211,6 +215,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 	    		userNow.getSeeks().get(6).getItemOffered().getName(),
 		};
 		
+		service = "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
 		for ( int i1 = 0, i2= 8; i1 < transactType.length; i1++, i2++) {
 			//int i2 = i1 + 8;
     		String query = update(selectClause, whereClause, username, service, prefix, newProductNameValue[i2], transactType[i1]);
@@ -315,6 +320,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 
     	//Search
 
+    	service = "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
     	Query q= QueryFactory.create(queryString);
     	QueryExecution qexec = QueryExecutionFactory.sparqlService(service, q);
     	ResultSet results = qexec.execSelect();
@@ -628,7 +634,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 				}
 			}
 		}
-
+		service= "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
 		HttpSession session = httpServletRequest.getSession();
     	String username = (String) session.getAttribute("username");
 
@@ -791,7 +797,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
         
         MailService mailserve = new MailService(javaMailSender);
         ServletContext context = httpServletRequest.getServletContext();
-        EmailInfo emailForm = new EmailInfo();
+
         ArrayList<String> products = new ArrayList<String>();
         ArrayList<String> transactionTypes = new ArrayList<String>();
         for (int i1 = 0; i1 < userNow.getMakesOffer().size(); i1 ++) {
@@ -810,7 +816,8 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
             	productTransactions[i3][131+1] = products.get(i3);
             }
         }*/
-        
+        EmailInfo emailForm = new EmailInfo();
+
     	emailForm.setProducts(products);
     	//emailForm.setProductTransactions(productTransactions);
         //mailserve.emailTemplate(emailForm, httpServletRequest, httpServletResponse, context, new Locale("en", "US"), "Vibhu", "admin@ciss.in");
@@ -967,7 +974,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
 	    		producerTemplate.sendBodyAndHeader(query,"proc","update");
     		}
         }
-       	Application.chatRoom.sendMessage("Hello All! This is my product offering. Please chck your email for more details.");
+       	Application.chatRoom.sendMessage("Hello All, " + username + "is offering " + "product1");
 
        	/*try {
     		Object obj = session.getAttribute("xmppUser");
