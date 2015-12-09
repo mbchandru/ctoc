@@ -12,7 +12,6 @@ import ciss.in.Application;
 import ciss.in.xmpp.template.XmppAuthenticationException;
 import ciss.in.xmpp.template.XmppUser;
 import ciss.in.xmpp.template.config.XmppConfig;
-import rocks.xmpp.extensions.muc.OccupantEvent;
 
 public class XMPPConnection {
 

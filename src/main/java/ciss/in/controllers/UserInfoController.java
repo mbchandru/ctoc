@@ -100,11 +100,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 			"Prefix j.3:   <http://schema.org/Offer/> " + 
 			"Prefix j.2:   <http://schema.org/Product/> " + 
 			"Prefix j.4:   <http://schema.org/PriceSpecification/> "; 
-	
-/*	public UserInfoController() {
-		this.service= "http://"+ Application.xmppConfig.getFusekiHost() "localhost" + ":3030/coaf/query";
-	}*/
-	
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/user/register").setViewName("/user/register");
@@ -219,7 +215,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 		for ( int i1 = 0, i2= 8; i1 < transactType.length; i1++, i2++) {
 			//int i2 = i1 + 8;
     		String query = update(selectClause, whereClause, username, service, prefix, newProductNameValue[i2], transactType[i1]);
-    		System.out.println("query " + query);
+    		//System.out.println("query " + query);
     		producerTemplate.sendBodyAndHeader(query,"proc","update");
 		}
 		
@@ -809,18 +805,19 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
         	transactionTypes.add(i2, userNow.getSeeks().get(i2).getItemOffered().getCategory());
         }
 
-/*        String[][] productTransactions = new String[21][21];
-        for (int i3 = 0; i3 < transactionTypes.size(); i3 ++) {
-            for (int i31 = 0; i31 < products.size(); i31 ++) {
-            	productTransactions[i3][i31] = transactionTypes.get(i3);
-            	productTransactions[i3][131+1] = products.get(i3);
-            }
-        }*/
+        String[][] productTransactions = new String[21][21];
+        for (int i3 = 0,i4 = 0; i3 < transactionTypes.size(); i3++) {
+        		productTransactions[i3][i4] = transactionTypes.get(i3);
+        }
+        for (int i31 = 0, i5 = 1; i31 < products.size(); i31++) {
+        	productTransactions[i31][i5] = products.get(i31);
+        }
         EmailInfo emailForm = new EmailInfo();
 
     	emailForm.setProducts(products);
-    	//emailForm.setProductTransactions(productTransactions);
-        //mailserve.emailTemplate(emailForm, httpServletRequest, httpServletResponse, context, new Locale("en", "US"), "Vibhu", "admin@ciss.in");
+    	emailForm.setTransactionTypes(transactionTypes);
+    	emailForm.setProductTransactions(productTransactions);
+        mailserve.emailTemplate(emailForm, httpServletRequest, httpServletResponse, context, new Locale("en", "US"), "Chandra", "mbchandru@gmail.com");
 
     	RDFStream rdf = new RDFStream();
     	ByteArrayOutputStream out = (ByteArrayOutputStream) rdf.createRDF(userNow);
@@ -871,7 +868,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
     		
     		for ( int i1 = 0; i1 < transactType.length; i1++) {
 	    		String query = update(selectClause, whereClause, username, service, prefix, newProductNameValue[i1], transactType[i1]);
-	    		System.out.println("query " + query);
+	    		//System.out.println("query " + query);
 	    		producerTemplate.sendBodyAndHeader(query,"proc","update");
     		}
 
@@ -890,7 +887,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
     		
     		for ( int i1 = 0; i1 < transactType.length; i1++) {
 	    		String query = update(selectClause, whereClause, username, service, prefix, newProductImageNameValue[i1], transactType[i1]);
-	    		System.out.println("query " + query);
+	    		//System.out.println("query " + query);
 	    		producerTemplate.sendBodyAndHeader(query,"proc","update");
     		}
         
@@ -910,7 +907,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
     		
     		for ( int i1 = 0; i1 < 5; i1++) {
 	    		String query = updatePrice2(selectClause, whereClause, username, service, prefix, newProductPriceValue[i1], transactType[i1]);
-	    		System.out.println("query " + query);
+	    		//System.out.println("query " + query);
 
 	    		producerTemplate.sendBodyAndHeader(query,"proc","update");
     		}    		
@@ -932,7 +929,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
     		
     		for ( int i1 = 0; i1 < 5; i1++) {
 	    		String query = updatePriceCurrency2(selectClause, whereClause, username, service, prefix, newProductPriceCurrencyValue[i1], transactType[i1]);
-	    		System.out.println("query " + query);
+	    		//System.out.println("query " + query);
 	    		producerTemplate.sendBodyAndHeader(query,"proc","update");
     		}    		
         
@@ -951,7 +948,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
     		
     		for ( int i1 = 5; i1 < transactType.length; i1++) {
 	    		String query = updateProductPrice4(selectClause, whereClause, username, service, prefix, newProduct4PriceValue[i1], transactType[i1]);
-	    		System.out.println("query " + query);
+	    		//System.out.println("query " + query);
 	    		producerTemplate.sendBodyAndHeader(query,"proc","update");
     		}    		
 
@@ -970,11 +967,11 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
     		
     		for ( int i1 = 5; i1 < transactType.length; i1++) {
 	    		String query = updateProductPriceCurrency4(selectClause, whereClause, username, service, prefix, newProduct4PriceCurrencyValue[i1], transactType[i1]);
-	    		System.out.println("query " + query);
+	    		//System.out.println("query " + query);
 	    		producerTemplate.sendBodyAndHeader(query,"proc","update");
     		}
         }
-       	Application.chatRoom.sendMessage("Hello All, " + username + "is offering " + "product1");
+       	Application.chatRoom.sendMessage("Hello All, " + username + " is offering " + "product1");
 
        	/*try {
     		Object obj = session.getAttribute("xmppUser");
@@ -1022,7 +1019,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
 				" WHERE { " +
 					"?x " + whereClause + " ?" + selectClause + " . ?x j.2:category " + "\"" + transactType + "\"" + " . ?y j.1:name " + "\"" + username.toString() + "\"" +
 	    		"}";   	
-		System.out.println("queryString2 " + queryString2);
+		//System.out.println("queryString2 " + queryString2);
 
     	Query q2 = QueryFactory.create(queryString2);
     	QueryExecution qexec2 = QueryExecutionFactory.sparqlService(service, q2);
@@ -1061,7 +1058,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
 				
 					
 					//"?x " + whereClause + " ?" + selectClause + " . ?x j.1:category " + "\"" + transactType + "\"" + " . ?y j.0:name " + "\"" + username.toString() + "\"" +
-		System.out.println("queryString2 " + queryString2);
+		//System.out.println("queryString2 " + queryString2);
 
 
 
@@ -1104,7 +1101,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
 				
 					
 					//"?x " + whereClause + " ?" + selectClause + " . ?x j.1:category " + "\"" + transactType + "\"" + " . ?y j.0:name " + "\"" + username.toString() + "\"" +
-		System.out.println("queryString2 " + queryString2);
+		//System.out.println("queryString2 " + queryString2);
 
 
 
@@ -1145,7 +1142,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
 			  		" ?seeks	j.0:priceSpecification ?priceSpecification . " +
 			    	" ?priceSpecification j.4:price " + " ?" + selectClause + " ." +
 		    		"}";
-		System.out.println("queryString2 " + queryString2);
+		//System.out.println("queryString2 " + queryString2);
 
 		Query q2 = QueryFactory.create(queryString2);
     	QueryExecution qexec2 = QueryExecutionFactory.sparqlService(service, q2);
@@ -1187,7 +1184,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
 			  		" ?seeks	j.0:priceSpecification ?priceSpecification . " +
 			    	" ?priceSpecification j.4:priceCurrency " + " ?" + selectClause + " ." +
 		    		"}";
-		System.out.println("queryString2 " + queryString2);
+		//System.out.println("queryString2 " + queryString2);
 
 		Query q2 = QueryFactory.create(queryString2);
     	QueryExecution qexec2 = QueryExecutionFactory.sparqlService(service, q2);

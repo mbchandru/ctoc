@@ -93,6 +93,8 @@ public class MailService {
 		ctx.setVariable("subscriptionDate", new Date());
 		ctx.setVariable("transactions", emailForm.getTransactionTypes());
 		ctx.setVariable("products", emailForm.getProducts());
+		ctx.setVariable("productTransactions", emailForm.getProductTransactions());
+		ctx.setVariable("emailForms", emailForm);
 		//ctx.setVariable("imageResourceName", imageResourceName); // so that we can reference it from HTML
 		 
 		// Prepare message using a Spring helper
@@ -109,7 +111,7 @@ public class MailService {
 		// Add the inline image, referenced from the HTML code as "cid:${imageResourceName}"
 		//final InputStreamSource imageSource = new ByteArrayResource(imageBytes);
 		//message.addInline(imageResourceName, imageSource, imageContentType);
-        System.out.println("cc " + emailForm.getProducts().get(1) + " " + emailForm.getNumber() + " " + emailForm.getMessage());
+        System.out.println("mailInfo " + emailForm.getProducts().get(1) + " " + emailForm.getNumber() + " " + emailForm.getMessage());
 		 
 		// Send mail
 		this.javaMailSender.send(mimeMessage);

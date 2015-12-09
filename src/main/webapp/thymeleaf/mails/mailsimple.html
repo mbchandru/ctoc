@@ -10,27 +10,50 @@
       Wow! You've got a long name (more than 10 chars)!
     </p>
     <p>
-      You are receiving this email as per <b>your transaction's request</b> on
+      You are receiving this email as per <b>your transactions</b> on
       <span th:text="${#dates.format(subscriptionDate)}">03-11-2015</span>
     </p>
-    <p>Your transactions are:</p>
+    <p>Below are your transactions are:</p>
     You are interested to
-    <div th:each="i : ${productTransactions}">
-    	<div th:each="j : ${productTransactions}">
-		    <div style="width: 15%;"><span th:text="${productTransactions[i][j]}">Transaction Type</span>
-		    </div>
-	    	<div style="width: 85%;"><span th:text="${productTransactions[i][j+1]}">Product</span>
-	    	</div>
+    <table>
+	  <tr>
+	    <th>Transaction Type</th>
+	    <th>Product</th>
+	  </tr>
+		<div th:each="emailForm : ${emailForms}" th:remove="tag">
+			<td th:text="${emailForm.transactionTypes}">2.41</td>
+			<td th:text="${emailForm.products}">Onions</td>
+		</div>
+
+<!-- 	  <tr th:each="transaction : ${transactions}">
+	    <td style="width: 50%;" th:text="${transaction}">Onions</td>
+	  </tr>
+	  <tr th:each="product : ${products}">
+	    <td style="width: 50%;" th:text="${product}">2.41</td>
+	  </tr> -->
+	</table>
+<!--     <div th:each="productTransaction : ${productTransactions}">
+		    <span style="width: 50%;"><span th:text="${productTransaction[index]}">Transaction Type</span>
+		    </span>
+	    	<span style="width: 50%;"><span th:text="${productTransaction[index+1]}">Product</span>
+	    	</span>
+    </div>  -->   
+<!--     <div th:each="product : ${products}">
+    	<div th:each="transaction : ${transactions}">
+		    <span style="width: 50%;"><span th:text="${transaction}">Transaction Type</span>
+		    </span>
+	    	<span style="width: 50%;"><span th:text="${product}">Product</span>
+	    	</span>
     	</div>
-    </div>
-    <!-- <ul>
+    </div -->
+<!--     <ul>
       You are interested to <li th:each="transaction : ${transactions}" th:text="${transaction}" >Product Listing</li>
       <ul>
       <li th:each="product : ${products}" th:text="${product}" />
       </ul>
     </ul> -->
     <p>
-      You can find <b>your inlined image</b> just below this text.
+      Below is <b>your product images</b>.
     </p>
     <p>
       <img src="sample.png" th:src="'cid:' + ${imageResourceName}" />

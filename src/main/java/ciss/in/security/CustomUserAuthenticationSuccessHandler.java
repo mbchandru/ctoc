@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import rocks.xmpp.core.XmppException;
 import rocks.xmpp.core.session.XmppClient;
 import ciss.in.Application;
 import ciss.in.xmpp.XMPPConnection;

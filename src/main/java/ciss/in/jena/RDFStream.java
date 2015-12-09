@@ -210,7 +210,7 @@ public class RDFStream extends Object {
 		 OutputStream out = new ByteArrayOutputStream();
 		 
 		 RDFDataMgr.write(out, model, Lang.RDFXML);
-		 System.out.println(out.toString());
+		 //System.out.println(out.toString());
 		 return out;
 	}
 }
