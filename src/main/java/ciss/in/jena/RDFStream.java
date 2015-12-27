@@ -23,7 +23,7 @@ public class RDFStream extends Object {
 
 		model.setNsPrefix("schemaorg", "http://schema.org/");
 
-    	String personURL    = "http://" + Application.xmppConfig.getDomainHost() + "/in/" + userNow.getUsername();
+    	String personURL    = "http://" + Application.xmppConfig.getDomainHost() + "/" + userNow.getUsername();
 
     	Resource talha = model.createResource(personURL, Schemaorg.Person);
     	

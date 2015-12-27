@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean id="mongoBean" class="com.mongodb.Mongo">
-        <constructor-arg name="host" value="${spring.data.mongodb.host}" />
-        <constructor-arg name="port" value="${spring.data.mongodb.port}" />
+        <constructor-arg name="host" value="${spring.data.db1.h}" />
+        <constructor-arg name="port" value="${spring.data.db1.p}" />
     </bean>
 </beans>

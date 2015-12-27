@@ -157,7 +157,7 @@
 </body>
 <script th:inline="javascript">
 $(document).ready(function(){
-    $.get("/in/config", function(data, status){
+    $.get("/config", function(data, status){
         $('#jid').html(data.jid);
         require(['converse'], function (converse) {
             converse.initialize({

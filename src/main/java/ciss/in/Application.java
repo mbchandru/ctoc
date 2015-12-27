@@ -3,9 +3,11 @@ package ciss.in;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ImportResource;
+//import org.springframework.context.annotation.ImportResource;
 
 import rocks.xmpp.addr.Jid;
 import rocks.xmpp.core.XmppException;
@@ -13,14 +15,19 @@ import rocks.xmpp.core.session.XmppClient;
 import rocks.xmpp.extensions.muc.ChatRoom;
 import rocks.xmpp.extensions.muc.ChatService;
 import rocks.xmpp.extensions.muc.MultiUserChatManager;
-
 import ciss.in.xmpp.XMPPConnection;
 import ciss.in.xmpp.template.config.XmppConfig;
 
 @EnableConfigurationProperties(XmppConfig.class)
 @SpringBootApplication
-@ImportResource("classpath:mongodb.xml")
-public class Application /*extends SpringBootServletInitializer*/ {
+//@ImportResource("classpath:mongodb.xml")
+public class Application extends SpringBootServletInitializer {
+
+		    @Override
+		    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		        return application.sources(Application.class);
+		    }
+		    
 	public static ChatRoom chatRoom;
 
 	public static XMPPConnection xmpp;
@@ -49,7 +56,7 @@ public class Application /*extends SpringBootServletInitializer*/ {
 
 	  		MultiUserChatManager multiUserChatManager = xmppClient.getManager(MultiUserChatManager.class);
 	        ChatService chatService = multiUserChatManager.createChatService(Jid.of("conference." + xmppClient.getDomain()));
-	        
+	        System.out.println("xmppClient.getDomain() "+ xmppClient.getDomain());
 /*	        List<ChatRoom> publicRooms = chatService.discoverRooms();
 	        Iterator<ChatRoom> iterator = publicRooms.iterator();
 	    	while (iterator.hasNext()) {

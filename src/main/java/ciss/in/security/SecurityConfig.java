@@ -46,7 +46,7 @@ public class SecurityConfig {
 	    	CustomLogoutSuccessHandler logoutSuccessHandler = new CustomLogoutSuccessHandler();
 	        http
 	        /*.antMatcher("/user/**")*/.authorizeRequests()
-	            .antMatchers("/index","/user/error","/user/forgotpassword","/user/resetpassword","/user/register","/","/js/**","/store/**","/assets/**","/css/**","/fonts/**","/images/**","/home/**","/webjars/**").permitAll()
+	            .antMatchers("/prebind","/config","/index","/user/error","/user/forgotpassword","/user/resetpassword","/user/register","/","/js/**","/store/**","/assets/**","/css/**","/fonts/**","/images/**","/home/**","/webjars/**").permitAll()
 	            .anyRequest().hasRole("USER")// .authenticated()//.hasRole("USER")
 	            .and()
 	        .formLogin()

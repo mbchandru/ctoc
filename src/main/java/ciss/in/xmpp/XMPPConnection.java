@@ -51,7 +51,7 @@ public class XMPPConnection {
         		.hostname(xmppConfig.getHost())
                 .port(xmppConfig.getPort())
                 .path(xmppConfig.getHttpBind())
-                .wait(15)
+                .wait(75)
                 .build();		
 	}
 	
@@ -100,7 +100,7 @@ public class XMPPConnection {
 		XmppUser xmppUser;
         try {
         	//xmppClient.connect();
-            xmppClient.login(username, password, domain);
+            xmppClient.login(username, password);
 
             rocks.xmpp.extensions.httpbind.BoshConnection boshConnection =
                     (rocks.xmpp.extensions.httpbind.BoshConnection) xmppClient.getActiveConnection();

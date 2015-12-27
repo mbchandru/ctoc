@@ -735,7 +735,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getMakesOffer().get(1).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/exchange1/" + fileName));
+    						userNow.getMakesOffer().get(1).getItemOffered().setImage(new URL().to("http://" + domainHost + "/store/" + username + "/exchange1/" + fileName));
                     		break;
                     	case 1: 
                     		filePath  = theFile.getAbsolutePath() + "/exchange2/";
@@ -743,7 +743,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getSeeks().get(2).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/exchange2/" + fileName));
+    						userNow.getSeeks().get(2).getItemOffered().setImage(new URL().to("http://" + domainHost + "/store/" + username + "/exchange2/" + fileName));
                     		break;
                     	case 2: 
                     		filePath  = theFile.getAbsolutePath() + "/sell/";
@@ -751,7 +751,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getMakesOffer().get(0).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/sell/" + fileName));
+    						userNow.getMakesOffer().get(0).getItemOffered().setImage(new URL().to("http://" + domainHost + "/store/" + username + "/sell/" + fileName));
                     		break;
                     	case 3: 
                     		filePath  = theFile.getAbsolutePath() + "/loan/";
@@ -759,7 +759,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getMakesOffer().get(2).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/loan/" + fileName));
+    						userNow.getMakesOffer().get(2).getItemOffered().setImage(new URL().to("http://" + domainHost + "/store/" + username + "/loan/" + fileName));
                     		break;
                     	case 4: 
                     		filePath  = theFile.getAbsolutePath() + "/give/";
@@ -767,7 +767,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getMakesOffer().get(3).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/give/" + fileName));
+    						userNow.getMakesOffer().get(3).getItemOffered().setImage(new URL().to("http://" + domainHost + "/store/" + username + "/give/" + fileName));
                     		break;
                     	case 5: 
                     		filePath  = theFile.getAbsolutePath() + "/rent/";
@@ -775,7 +775,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
                     		imageFilePath.mkdirs();
                     		image = new File(imageFilePath.getAbsolutePath() + "/" + fileName);
     						multipartFile.transferTo(image);
-    						userNow.getMakesOffer().get(4).getItemOffered().setImage(new URL().to("http://" + domainHost + "/in/store/" + username + "/rent/" + fileName));
+    						userNow.getMakesOffer().get(4).getItemOffered().setImage(new URL().to("http://" + domainHost + "/store/" + username + "/rent/" + fileName));
                     		break;
                     	}
 					} catch (IllegalStateException | IOException e) {
@@ -786,8 +786,8 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
             }
         }
 
-		//buyProduct.setImage(new URL("http://" + domainHost + "/in/store/" + username + "buy/" + fileName));
-    	//wantfreeProduct.setImage(new URL("http://" + domainHost + "/in/store/" + username + "want/" + fileName));
+		//buyProduct.setImage(new URL("http://" + domainHost + "/store/" + username + "buy/" + fileName));
+    	//wantfreeProduct.setImage(new URL("http://" + domainHost + "/store/" + username + "want/" + fileName));
     			
         userservice.update(userNow);
         
