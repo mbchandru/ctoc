@@ -1,5 +1,9 @@
 package ciss.in;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.Executors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +11,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
-//import org.springframework.context.annotation.ImportResource;
 
 import rocks.xmpp.addr.Jid;
 import rocks.xmpp.core.XmppException;
@@ -15,6 +18,7 @@ import rocks.xmpp.core.session.XmppClient;
 import rocks.xmpp.extensions.muc.ChatRoom;
 import rocks.xmpp.extensions.muc.ChatService;
 import rocks.xmpp.extensions.muc.MultiUserChatManager;
+import rocks.xmpp.extensions.muc.model.RoomConfiguration;
 import ciss.in.xmpp.XMPPConnection;
 import ciss.in.xmpp.template.config.XmppConfig;
 
@@ -37,7 +41,7 @@ public class Application extends SpringBootServletInitializer {
 	
 	public static XmppClient xmppClient;
 	
-    public static void main(String[] args) throws XmppException {
+    public static void main(String[] args) throws XmppException, InstantiationException, IllegalAccessException {
         @SuppressWarnings("unused")
 		ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
@@ -46,23 +50,30 @@ public class Application extends SpringBootServletInitializer {
   		
   		xmpp.makeXmppClient();
   		xmppClient = xmpp.getXmppClient();
-  		
     	xmppClient.connect();
+    	
+    	xmppClient.login(xmppConfig.getAdmin(), xmppConfig.getAdminPassword());
 
-    	xmppClient.login(xmppConfig.getAdmin(), xmppConfig.getAdminPassword(), xmppConfig.getHost());
-
-    	//Executors.newFixedThreadPool(1).execute(() -> {
+/*    	ServiceDiscoveryManager serviceDiscoveryManager = xmppClient.getManager(ServiceDiscoveryManager.class);
+    	InfoNode infoNode = serviceDiscoveryManager.discoverInformation(Jid.of("ejabberd@" + xmppConfig.getHost()));*/
+    	
+    	Executors.newFixedThreadPool(1).execute(() -> {
         try {
 
 	  		MultiUserChatManager multiUserChatManager = xmppClient.getManager(MultiUserChatManager.class);
 	        ChatService chatService = multiUserChatManager.createChatService(Jid.of("conference." + xmppClient.getDomain()));
 	        System.out.println("xmppClient.getDomain() "+ xmppClient.getDomain());
-/*	        List<ChatRoom> publicRooms = chatService.discoverRooms();
+	        List<ChatRoom> publicRooms = chatService.discoverRooms();
 	        Iterator<ChatRoom> iterator = publicRooms.iterator();
 	    	while (iterator.hasNext()) {
-	    		System.out.println(iterator.next());
-	    	}*/
-	        chatRoom = chatService.createRoom("FreeBuys");
+	    		if (iterator.next().getRoomInformation().getName().equalsIgnoreCase("freebuys"))
+	    		;//System.out.println("room " + iterator.next().getRoomInformation().getName());
+	    	}
+/*	        RoomConfiguration roomConfiguration = RoomConfiguration.builder().persistent(true).build();
+	        ChatRoom cr = new ChatRoom("freebuys", Jid.of("conference." + xmppClient.getDomain()), xmppClient);
+	        chatRoom.configure(roomConfiguration);
+	        chatRoom.wait(10000);*/
+	        chatRoom = chatService.createRoom("freebuys");
 
 	        chatRoom.addOccupantListener(e -> {
 	            if (!e.getOccupant().isSelf()) {
@@ -96,13 +107,15 @@ public class Application extends SpringBootServletInitializer {
 	                }
 	            }
 	        });
-	        
 	        chatRoom.enter(xmppConfig.getAdmin());
             chatRoom.sendMessage("Hello All! This is " + xmppConfig.getAdmin());
+            RoomConfiguration roomConfiguration = RoomConfiguration.builder().persistent(true).build();
+	        //ChatRoom cr = new ChatRoom("freebuys", Jid.of("conference." + xmppClient.getDomain()), xmppClient);
+	        chatRoom.configure(roomConfiguration);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        //});
+        });
     }
     
 	@Autowired

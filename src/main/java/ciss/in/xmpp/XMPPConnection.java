@@ -51,7 +51,7 @@ public class XMPPConnection {
         		.hostname(xmppConfig.getHost())
                 .port(xmppConfig.getPort())
                 .path(xmppConfig.getHttpBind())
-                .wait(75)
+                .wait(0)
                 .build();		
 	}
 	
@@ -78,13 +78,12 @@ public class XMPPConnection {
 
             registrationManager = xmppClient.getManager(RegistrationManager.class);
         	registrationManager.setEnabled(true);
-
-    		registration = Registration.builder()
+        	
+    		Registration registration = Registration.builder()
     				.username(authUser.getUsername().toString())
     				.password(authUser.getPassword().toString())
     				.build();
-        	
-        	if(!registration.isRegistered()) {
+    		if(!registration.isRegistered()) {
         		registrationManager.register(registration);
         		System.out.println("Chat User " + registration.getUsername() + " got registered");
         		registered = true;
@@ -96,7 +95,7 @@ public class XMPPConnection {
         return registered;
 	}
 	
-	public XmppUser loginUser(XmppClient xmppClient, String username, String password, String domain) {
+	public XmppUser loginUser(XmppClient xmppClient, String username, String password, String domain, String service) {
 		XmppUser xmppUser;
         try {
         	//xmppClient.connect();
@@ -109,8 +108,8 @@ public class XMPPConnection {
 
             // Detaches the BOSH session, without terminating it.
             long rid = boshConnection.detach();
-            //System.out.println("JID: " + xmppClient.getConnectedResource());
-            //System.out.println("SID: " + sessionId);
+            System.out.println("JID: " + xmppClient.getConnectedResource().getLocal());
+            System.out.println("SID: " + sessionId);
             System.out.println("RID: " + rid);
 
             xmppUser = new XmppUser();
