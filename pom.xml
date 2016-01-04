@@ -324,7 +324,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-        			<classifier>in</classifier>
+        			<classifier></classifier>
     			</configuration>
             </plugin>
 <!-- 		<plugin>
