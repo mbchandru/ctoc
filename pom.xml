@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
 	<groupId>ciss</groupId>
@@ -66,7 +65,8 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.3.1</version><!--$NO-MVN-MAN-VER$-->
+			<version>2.3.1</version>
+            <!--$NO-MVN-MAN-VER$-->
 		</dependency>        
 		<dependency>
 			<groupId>com.google.code.maven-play-plugin.net.tanesha.recaptcha4j</groupId>
@@ -177,7 +177,8 @@
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
-			<version>3.0.4</version><!--$NO-MVN-MAN-VER$-->
+			<version>3.0.4</version>
+            <!--$NO-MVN-MAN-VER$-->
 			</dependency>
  		<dependency>
 			<groupId>org.apache.jena</groupId>
@@ -348,4 +349,26 @@
         </resources> -->
     </build>
 
+<profiles>
+        <profile>
+<!-- When built in OpenShift the openshift profile will be used when invoking mvn. -->
+<!-- Use this profile for any OpenShift specific customization your app will need. -->
+<!-- By default that is to put the resulting archive into the deployments folder. -->
+<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+<id>openshift</id>
+<build>
+   <finalName>in</finalName>
+   <plugins>
+     <plugin>
+       <artifactId>maven-war-plugin</artifactId>
+       <version>2.2</version>
+       <configuration>
+         <outputDirectory>deployments</outputDirectory>
+         <warName>ROOT</warName>
+       </configuration>
+     </plugin>
+   </plugins>
+ </build>
+</profile>
+    </profiles>
 </project>
