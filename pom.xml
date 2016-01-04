@@ -320,13 +320,13 @@
     
     <build>
         <plugins>
-<!--             <plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
+<!--                 <configuration>
         			<classifier>in</classifier>
-    			</configuration>
-            </plugin> -->
+    			</configuration> -->
+            </plugin>
 <!-- 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>
 	        <artifactId>maven-war-plugin</artifactId>
@@ -360,7 +360,7 @@
 <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
 <id>openshift</id>
 <build>
-   <!-- <finalName>in</finalName> -->
+   <finalName>in</finalName>
    <plugins>
      <plugin>
        <artifactId>maven-war-plugin</artifactId>
