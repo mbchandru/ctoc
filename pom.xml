@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
 	<groupId>ciss</groupId>
-<!--	<artifactId>in</artifactId>
- 	<version>1.1</version> -->
+	<artifactId>1.2.6.RELEASE</artifactId>
+ 	<version>1.2</version>
 	<packaging>war</packaging>
 	<name>jsonls</name>
 	<description>jsonls</description>
