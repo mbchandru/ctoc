@@ -71,7 +71,7 @@ public class CustomUserAuthenticationSuccessHandler implements AuthenticationSuc
   			xmppUser = new XmppUser();
   			String username = authUser.getUsername();
   			String password = authUser.getPassword();
-  			String service = "register";
+  			//String service = "register";
   			xmppUser = xmpp.loginUser(xmppClient, username, password, Application.xmppConfig.getHost(), null);
   			session.setAttribute("xmppUser", xmppUser);
   		}
