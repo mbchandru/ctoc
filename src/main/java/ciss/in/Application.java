@@ -57,7 +57,7 @@ public class Application extends SpringBootServletInitializer {
 /*    	ServiceDiscoveryManager serviceDiscoveryManager = xmppClient.getManager(ServiceDiscoveryManager.class);
     	InfoNode infoNode = serviceDiscoveryManager.discoverInformation(Jid.of("ejabberd@" + xmppConfig.getHost()));*/
     	
-    	//Executors.newFixedThreadPool(1).execute(() -> {
+    	Executors.newFixedThreadPool(1).execute(() -> {
         try {
 
 	  		MultiUserChatManager multiUserChatManager = xmppClient.getManager(MultiUserChatManager.class);
@@ -115,7 +115,7 @@ public class Application extends SpringBootServletInitializer {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        //});
+        });
     }
     
 	@Autowired
