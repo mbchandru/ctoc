@@ -368,7 +368,7 @@
        <configuration>
 		 <failOnMissingWebXml>false</failOnMissingWebXml>
          <outputDirectory>deployments</outputDirectory>
-         <warName>in</warName>
+         <warName>ROOT</warName>
        </configuration>
      </plugin>
    </plugins>
