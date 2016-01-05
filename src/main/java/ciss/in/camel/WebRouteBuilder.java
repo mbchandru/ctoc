@@ -14,6 +14,9 @@ public class WebRouteBuilder extends RouteBuilder {
 	
     final Logger logger = LoggerFactory.getLogger(RouteBuilder.class);
     
+    public WebRouteBuilder() {
+    	
+    }
 	@Override
 	public void configure() throws Exception {
 	
