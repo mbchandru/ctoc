@@ -971,7 +971,7 @@ String transactType[] = {"Sell","ExchangeGive","Lend","GiveFree","Rent","Buy","W
 	    		producerTemplate.sendBodyAndHeader(query,"proc","update");
     		}
         }
-       	Application.chatRoom.sendMessage("Hello All, " + username + " is offering " + "product1");
+       	//Application.chatRoom.sendMessage("Hello All, " + username + " is offering " + "product1");
 
        	/*try {
     		Object obj = session.getAttribute("xmppUser");
