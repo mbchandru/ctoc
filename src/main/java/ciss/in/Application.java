@@ -27,10 +27,10 @@ import ciss.in.xmpp.template.config.XmppConfig;
 //@ImportResource("classpath:mongodb.xml")
 public class Application extends SpringBootServletInitializer {
 
-		    @Override
-		    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		        return application.sources(Application.class);
-		    }
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
+    }
 		    
 	public static ChatRoom chatRoom;
 
@@ -65,16 +65,17 @@ public class Application extends SpringBootServletInitializer {
 	        System.out.println("xmppClient.getDomain() "+ xmppClient.getDomain());
 	        List<ChatRoom> publicRooms = chatService.discoverRooms();
 	        Iterator<ChatRoom> iterator = publicRooms.iterator();
-	    	while (iterator.hasNext()) {
-	    		if (iterator.next().getRoomInformation().getName().equalsIgnoreCase("freebuys"))
-	    		;//System.out.println("room " + iterator.next().getRoomInformation().getName());
+	    	if (iterator.hasNext()) {
+	    		chatRoom = iterator.next();//.getRoomInformation().getName().equalsIgnoreCase("freebuys");
+		    	System.out.println("room " + chatRoom.getRoomInformation().getName());
+    		}
+	    	else {
+				chatRoom = chatService.createRoom("freebuys");
 	    	}
 /*	        RoomConfiguration roomConfiguration = RoomConfiguration.builder().persistent(true).build();
 	        ChatRoom cr = new ChatRoom("freebuys", Jid.of("conference." + xmppClient.getDomain()), xmppClient);
 	        chatRoom.configure(roomConfiguration);
 	        chatRoom.wait(10000);*/
-	        chatRoom = chatService.createRoom("freebuys");
-
 	        chatRoom.addOccupantListener(e -> {
 	            if (!e.getOccupant().isSelf()) {
 	                switch (e.getType()) {
