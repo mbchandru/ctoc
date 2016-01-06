@@ -110,9 +110,9 @@ public class Application extends SpringBootServletInitializer {
 	        });
 	        chatRoom.enter(xmppConfig.getAdmin());
             chatRoom.sendMessage("Hello All! This is " + xmppConfig.getAdmin());
-            RoomConfiguration roomConfiguration = RoomConfiguration.builder().persistent(true).build();
+            //RoomConfiguration roomConfiguration = RoomConfiguration.builder().persistent(true).build();
 	        //ChatRoom cr = new ChatRoom("freebuys", Jid.of("conference." + xmppClient.getDomain()), xmppClient);
-	        chatRoom.configure(roomConfiguration);
+	        //chatRoom.configure(roomConfiguration);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
