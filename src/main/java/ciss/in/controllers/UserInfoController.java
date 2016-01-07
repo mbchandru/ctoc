@@ -705,7 +705,12 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 		userNow.getSeeks().get(2).setPriceSpecification(pricespec);
 		
 		List<MultipartFile> filesForUpload = imageFiles;
-		String relativeLoadPath = "/wildfly/standalone/tmp";
+		String envVar = null;
+		envVar = System.getenv("OPENSHIFT_DATA_DIR");
+		if (envVar == null)
+			envVar = "/";
+		
+		String relativeLoadPath = envVar;
 		String absoluteLoadPath = httpServletRequest.getServletContext().getRealPath(relativeLoadPath);
 		httpServletRequest.setAttribute("javax.servlet.context.tempdir", absoluteLoadPath);
 		httpServletRequest.getServletContext().getAttribute("javax.servlet.context.tempdir");
