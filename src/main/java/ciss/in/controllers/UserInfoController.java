@@ -705,7 +705,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 		userNow.getSeeks().get(2).setPriceSpecification(pricespec);
 		
 		List<MultipartFile> filesForUpload = imageFiles;
-		String relativeLoadPath = "/";
+		String relativeLoadPath = "/wildfly/standalone/tmp";
 		String absoluteLoadPath = httpServletRequest.getServletContext().getRealPath(relativeLoadPath);
 		httpServletRequest.setAttribute("javax.servlet.context.tempdir", absoluteLoadPath);
 		httpServletRequest.getServletContext().getAttribute("javax.servlet.context.tempdir");
