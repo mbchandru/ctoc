@@ -91,6 +91,7 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
     
 	String service;
 
+	String ss = "";
 	String prefix = 
     		
 			"Prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " + 
