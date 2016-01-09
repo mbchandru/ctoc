@@ -18,6 +18,7 @@ import rocks.xmpp.core.session.XmppClient;
 import rocks.xmpp.extensions.muc.ChatRoom;
 import rocks.xmpp.extensions.muc.ChatService;
 import rocks.xmpp.extensions.muc.MultiUserChatManager;
+import rocks.xmpp.extensions.muc.model.RoomConfiguration;
 import ciss.in.xmpp.XMPPConnection;
 import ciss.in.xmpp.template.config.XmppConfig;
 
@@ -31,7 +32,7 @@ public class Application extends SpringBootServletInitializer {
         return application.sources(Application.class);
     }
 		    
-    @Autowired
+    //@Autowired
 	public static ChatRoom chatRoom;
 
 	public static XMPPConnection xmpp;
@@ -110,9 +111,9 @@ public class Application extends SpringBootServletInitializer {
 	        });
 	        chatRoom.enter(xmppConfig.getAdmin());
             chatRoom.sendMessage("Hello All! This is " + xmppConfig.getAdmin());
-            //RoomConfiguration roomConfiguration = RoomConfiguration.builder().persistent(true).build();
+            RoomConfiguration roomConfiguration = RoomConfiguration.builder().persistent(true).build();
 	        //ChatRoom cr = new ChatRoom("freebuys", Jid.of("conference." + xmppClient.getDomain()), xmppClient);
-	        //chatRoom.configure(roomConfiguration);
+	        chatRoom.configure(roomConfiguration);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
