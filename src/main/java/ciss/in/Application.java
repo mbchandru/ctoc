@@ -18,7 +18,6 @@ import rocks.xmpp.core.session.XmppClient;
 import rocks.xmpp.extensions.muc.ChatRoom;
 import rocks.xmpp.extensions.muc.ChatService;
 import rocks.xmpp.extensions.muc.MultiUserChatManager;
-import rocks.xmpp.extensions.muc.model.RoomConfiguration;
 import ciss.in.xmpp.XMPPConnection;
 import ciss.in.xmpp.template.config.XmppConfig;
 
@@ -32,6 +31,7 @@ public class Application extends SpringBootServletInitializer {
         return application.sources(Application.class);
     }
 		    
+    @Autowired
 	public static ChatRoom chatRoom;
 
 	public static XMPPConnection xmpp;
