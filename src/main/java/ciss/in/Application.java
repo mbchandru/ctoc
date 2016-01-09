@@ -18,7 +18,6 @@ import rocks.xmpp.core.session.XmppClient;
 import rocks.xmpp.extensions.muc.ChatRoom;
 import rocks.xmpp.extensions.muc.ChatService;
 import rocks.xmpp.extensions.muc.MultiUserChatManager;
-import rocks.xmpp.extensions.muc.model.RoomConfiguration;
 import ciss.in.xmpp.XMPPConnection;
 import ciss.in.xmpp.template.config.XmppConfig;
 
@@ -66,13 +65,13 @@ public class Application extends SpringBootServletInitializer {
 	        System.out.println("xmppClient.getDomain() "+ xmppClient.getDomain());
 	        List<ChatRoom> publicRooms = chatService.discoverRooms();
 	        Iterator<ChatRoom> iterator = publicRooms.iterator();
-/*	    	if (iterator.hasNext()) {
+	    	if (iterator.hasNext()) {
 	    		chatRoom = iterator.next();//.getRoomInformation().getName().equalsIgnoreCase("freebuys");
 		    	//System.out.println("room " + chatRoom.getRoomInformation().getName());
     		}
-	    	else {*/
+	    	else {
 				chatRoom = chatService.createRoom("freebuys");
-	    	//}
+	    	}
 /*	        RoomConfiguration roomConfiguration = RoomConfiguration.builder().persistent(true).build();
 	        ChatRoom cr = new ChatRoom("freebuys", Jid.of("conference." + xmppClient.getDomain()), xmppClient);
 	        chatRoom.configure(roomConfiguration);
@@ -111,9 +110,9 @@ public class Application extends SpringBootServletInitializer {
 	        });
 	        chatRoom.enter(xmppConfig.getAdmin());
             chatRoom.sendMessage("Hello All! This is " + xmppConfig.getAdmin());
-            RoomConfiguration roomConfiguration = RoomConfiguration.builder().persistent(true).build();
+            //RoomConfiguration roomConfiguration = RoomConfiguration.builder().persistent(true).build();
 	        //ChatRoom cr = new ChatRoom("freebuys", Jid.of("conference." + xmppClient.getDomain()), xmppClient);
-	        chatRoom.configure(roomConfiguration);
+	        //chatRoom.configure(roomConfiguration);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
