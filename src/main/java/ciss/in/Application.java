@@ -66,13 +66,13 @@ public class Application extends SpringBootServletInitializer {
 	        System.out.println("xmppClient.getDomain() "+ xmppClient.getDomain());
 	        List<ChatRoom> publicRooms = chatService.discoverRooms();
 	        Iterator<ChatRoom> iterator = publicRooms.iterator();
-	    	if (iterator.hasNext()) {
+/*	    	if (iterator.hasNext()) {
 	    		chatRoom = iterator.next();//.getRoomInformation().getName().equalsIgnoreCase("freebuys");
-		    	System.out.println("room " + chatRoom.getRoomInformation().getName());
+		    	//System.out.println("room " + chatRoom.getRoomInformation().getName());
     		}
-	    	else {
+	    	else {*/
 				chatRoom = chatService.createRoom("freebuys");
-	    	}
+	    	//}
 /*	        RoomConfiguration roomConfiguration = RoomConfiguration.builder().persistent(true).build();
 	        ChatRoom cr = new ChatRoom("freebuys", Jid.of("conference." + xmppClient.getDomain()), xmppClient);
 	        chatRoom.configure(roomConfiguration);
