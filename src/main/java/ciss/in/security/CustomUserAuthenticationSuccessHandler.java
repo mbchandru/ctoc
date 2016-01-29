@@ -34,11 +34,11 @@ public class CustomUserAuthenticationSuccessHandler implements AuthenticationSuc
     	
         //do some logic here if you want something to be done whenever
         //the user successfully logs in.
-/*      	String gRecaptchaResponse = (String) httpServletRequest.getParameter("g-recaptcha-response");
+      	String gRecaptchaResponse = (String) httpServletRequest.getParameter("g-recaptcha-response");
         ReCaptchaResponseVerfier veri = new ReCaptchaResponseVerfier();
-        boolean verify = veri.verifyRecaptcha(gRecaptchaResponse);*/
+        boolean verify = veri.verifyRecaptcha(gRecaptchaResponse);
         
-    	boolean verify = true;
+    	//boolean verify = true;
     	HttpSession session = httpServletRequest.getSession();
     	String returnValue = null;
 

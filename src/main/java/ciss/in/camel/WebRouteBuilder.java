@@ -24,15 +24,19 @@ public class WebRouteBuilder extends RouteBuilder {
 		.to("kafka:" + Application.xmppConfig.getKafkaHost() + "?topic=test&zookeeperHost=" + Application.xmppConfig.getZookeeperHost() + "&zookeeperPort=" + Application.xmppConfig.getZookeeperPort() + "&groupId=group1&keySerializerClass=kafka.serializer.DefaultEncoder")//.process(new MessageProcessor())
 		.to("log:user2")
 		.end();/*&serializerClass=kafka.serializer.StringEncoder*/
-				
+		String service;		
+		if (Application.xmppConfig.getFusekiPort().isEmpty())
+			service = "";
+		else
+			service = ":3030";
 		
 		//To Fuseki for load
-		from("direct:start-user").process(new UpdateProcessor()).to("restlet:http://" + Application.xmppConfig.getFusekiHost() + ":3030" + "/coaf?restletMethod=post" )
+		from("direct:start-user").process(new UpdateProcessor()).to("restlet:http://" + Application.xmppConfig.getFusekiHost() + service + "/coaf?restletMethod=post" )
 		.to("log:user3")
 		.end();
 		
 		//To Fuseki for search
-		from("direct:search").process(new QueryProcessor()).to("restlet:http://" + Application.xmppConfig.getFusekiHost() + ":3030" + "/coaf?restletMethod=post" )
+		from("direct:search").process(new QueryProcessor()).to("restlet:http://" + Application.xmppConfig.getFusekiHost() + service + "/coaf?restletMethod=post" )
 		.to("log:user4")
 		.end();
 		

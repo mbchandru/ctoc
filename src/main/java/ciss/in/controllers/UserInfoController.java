@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
+
 /*import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
@@ -71,6 +72,7 @@ import ciss.in.repositories.UserRepository;
 import ciss.in.security.ReCaptchaResponseVerfier;
 import ciss.in.service.UserService;
 import ciss.in.utils.MailService;
+import ciss.in.xmpp.template.config.XmppConfig;
 
 import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
@@ -212,7 +214,10 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 	    		userNow.getSeeks().get(6).getItemOffered().getName(),
 		};
 		
-		service = "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
+		if (Application.xmppConfig.getFusekiPort().isEmpty())
+			service = "http://"+ Application.xmppConfig.getFusekiHost() + "/coaf/query";
+		else
+			service = "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
 		for ( int i1 = 0, i2= 8; i1 < transactType.length; i1++, i2++) {
 			//int i2 = i1 + 8;
     		String query = update(selectClause, whereClause, username, service, prefix, newProductNameValue[i2], transactType[i1]);
@@ -317,7 +322,12 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 
     	//Search
 
-    	service = "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
+		if (Application.xmppConfig.getFusekiPort().isEmpty())
+			service = "http://"+ Application.xmppConfig.getFusekiHost() + "/coaf/query";
+		else
+			service = "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
+		
+    	//service = "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
     	Query q= QueryFactory.create(queryString);
     	QueryExecution qexec = QueryExecutionFactory.sparqlService(service, q);
     	ResultSet results = qexec.execSelect();
@@ -631,7 +641,13 @@ public class UserInfoController extends WebMvcConfigurerAdapter {
 				}
 			}
 		}
-		service= "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
+		
+		if (Application.xmppConfig.getFusekiPort().isEmpty())
+			service = "http://"+ Application.xmppConfig.getFusekiHost() + "/coaf/query";
+		else
+			service = "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
+		
+		//service= "http://"+ Application.xmppConfig.getFusekiHost() + ":3030/coaf/query";
 		HttpSession session = httpServletRequest.getSession();
     	String username = (String) session.getAttribute("username");
 

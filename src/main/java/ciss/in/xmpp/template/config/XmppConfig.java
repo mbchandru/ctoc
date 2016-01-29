@@ -30,6 +30,7 @@ public class XmppConfig {
 	
 	private String domainHost;
 	private String fusekiHost;
+	private String fusekiPort;
 	private String kafkaHost;
 	private String zookeeperHost;
 	private String zookeeperPort;
@@ -117,5 +118,11 @@ public class XmppConfig {
 	}
 	public void setZookeeperPort(String zookeeperPort) {
 		this.zookeeperPort = zookeeperPort;
+	}
+	public String getFusekiPort() {
+		return fusekiPort;
+	}
+	public void setFusekiPort(String fusekiPort) {
+		this.fusekiPort = fusekiPort;
 	}
 }
